@@ -53,15 +53,19 @@ dependencies {
 
     implementation(Android.coreKtx)
     implementation(Android.lifecycleRuntimeKtx)
+
     implementation(Android.Compose.activity)
     implementation(Android.Compose.ui)
     implementation(Android.Compose.toolingPreview)
     implementation(Android.Compose.material)
+    implementation(Android.Compose.navigation)
 
     testImplementation(Dependencies.Testing.jUnit)
+    
     androidTestImplementation(Dependencies.Testing.androidJUnit)
     androidTestImplementation(Dependencies.Testing.espresso)
     androidTestImplementation(Dependencies.Testing.composeJUnit)
+
     debugImplementation(Android.Compose.tooling)
     debugImplementation(Android.Compose.uiTestManifest)
 }

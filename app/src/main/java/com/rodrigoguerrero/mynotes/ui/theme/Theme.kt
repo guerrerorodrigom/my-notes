@@ -1,44 +1,59 @@
 package com.rodrigoguerrero.mynotes.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import com.rodrigoguerrero.mynotes.ui.theme.colors.LocalMyNotesColors
+import com.rodrigoguerrero.mynotes.ui.theme.colors.darkColors
+import com.rodrigoguerrero.mynotes.ui.theme.colors.lightColors
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
+object MyNotesTheme {
+    val color: ColorScheme
+        @Composable
+        get() = LocalMyNotesColors.current
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    val padding: MyNotesPadding
+        @Composable
+        get() = LocalMyNotesPadding.current
 
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+    val typography: Typography
+        @Composable
+        get() = LocalMyNotesTypography.current
+
+    val shapes: Shapes
+        @Composable
+        get() = LocalMyNotesShapes.current
+}
 
 @Composable
-fun MyNotesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+fun MyNotesTheme(
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (!useDarkTheme) {
+        lightColors()
     } else {
-        LightColorPalette
+        darkColors()
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    val padding = MyNotesPadding()
+    val typography = typography()
+
+    CompositionLocalProvider(
+        LocalMyNotesColors provides colors,
+        LocalMyNotesPadding provides padding,
+        LocalMyNotesTypography provides typography,
+        LocalMyNotesShapes provides Shapes
+    ) {
+        MaterialTheme(
+            colorScheme = colors,
+            shapes = Shapes,
+            typography = typography,
+            content = content
+        )
+    }
 }
