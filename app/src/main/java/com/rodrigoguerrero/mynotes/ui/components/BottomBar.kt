@@ -25,7 +25,8 @@ fun BottomBar(
     onCheckboxClicked: () -> Unit,
     onDrawingClicked: () -> Unit,
     onMicrophoneClicked: () -> Unit,
-    onImageClicked: () -> Unit
+    onImageClicked: () -> Unit,
+    onAddClicked: () -> Unit
 ) {
     BottomAppBar(
         modifier = modifier,
@@ -45,7 +46,7 @@ fun BottomBar(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = onAddClicked,
                 containerColor = MyNotesTheme.color.surfaceVariant,
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
             ) {
@@ -65,7 +66,8 @@ private fun PreviewBottomBar() {
                 onCheckboxClicked = { },
                 onDrawingClicked = { },
                 onMicrophoneClicked = { },
-                onImageClicked = { }
+                onImageClicked = { },
+                onAddClicked = { }
             )
         }
     }

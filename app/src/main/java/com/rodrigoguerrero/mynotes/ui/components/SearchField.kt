@@ -1,8 +1,6 @@
 package com.rodrigoguerrero.mynotes.ui.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,6 +9,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.ViewAgenda
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -34,7 +33,6 @@ fun SearchField(
     onMenuClicked: () -> Unit
 ) {
     var value by remember { mutableStateOf("") }
-    val interactionSource = remember { MutableInteractionSource() }
     var listView by remember { mutableStateOf(false) }
 
     TextField(
@@ -42,25 +40,21 @@ fun SearchField(
         onValueChange = { value = it },
         modifier = modifier.fillMaxWidth(),
         leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Menu,
-                contentDescription = null,
-                modifier = Modifier.clickable(
-                    indication = null,
-                    interactionSource = interactionSource
-                ) { onMenuClicked() }
-            )
+            IconButton(onClick = onMenuClicked) {
+                Icon(
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = null
+                )
+            }
         },
         shape = MyNotesTheme.shapes.extraLarge,
         trailingIcon = {
-            Icon(
-                imageVector = if (listView) Icons.Default.GridView else Icons.Outlined.ViewAgenda,
-                contentDescription = null,
-                modifier = Modifier.clickable(
-                    indication = null,
-                    interactionSource = interactionSource
-                ) { listView = !listView }
-            )
+            IconButton(onClick = { listView = !listView }) {
+                Icon(
+                    imageVector = if (listView) Icons.Default.GridView else Icons.Outlined.ViewAgenda,
+                    contentDescription = null
+                )
+            }
         },
         colors = TextFieldDefaults.textFieldColors(
             unfocusedIndicatorColor = Color.Transparent,
