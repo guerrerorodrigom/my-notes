@@ -57,9 +57,11 @@ dependencies {
     implementation(Android.Compose.activity)
     implementation(Android.Compose.ui)
     implementation(Android.Compose.toolingPreview)
+    implementation(Android.Compose.material3)
     implementation(Android.Compose.material)
     implementation(Android.Compose.navigation)
     implementation(Android.Compose.icons)
+    implementation(Android.Accompanist.systemUiController)
 
     testImplementation(Dependencies.Testing.jUnit)
     

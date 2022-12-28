@@ -3,24 +3,34 @@ package com.rodrigoguerrero.mynotes.ui.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.ui.components.BottomBar
+import com.rodrigoguerrero.mynotes.ui.components.DrawerMenu
 import com.rodrigoguerrero.mynotes.ui.components.SearchField
+import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesListScreen(
     modifier: Modifier = Modifier,
+    currentDestination: Destinations?
 ) {
+    val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             SearchField(
-                onMenuClicked = {},
+                onMenuClicked = {
+                    coroutineScope.launch { scaffoldState.drawerState.open() }
+                },
                 modifier = Modifier.padding(MyNotesTheme.padding.m)
             )
         },
@@ -32,7 +42,11 @@ fun NotesListScreen(
                 onImageClicked = { },
                 onAddClicked = { }
             )
-        }
+        },
+        drawerContent = {
+            DrawerMenu(onItemSelected = {}, currentDestination = currentDestination)
+        },
+        backgroundColor = MyNotesTheme.color.background
     ) { padding ->
         Column(modifier = modifier.padding(padding)) {
 
@@ -45,6 +59,6 @@ fun NotesListScreen(
 @Composable
 private fun PreviewNotesListScreen() {
     MyNotesTheme {
-        NotesListScreen()
+        NotesListScreen(currentDestination = Destinations.NOTES_LIST)
     }
 }

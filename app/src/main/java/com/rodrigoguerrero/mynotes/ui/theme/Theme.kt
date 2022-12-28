@@ -1,12 +1,17 @@
 package com.rodrigoguerrero.mynotes.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.Surface
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rodrigoguerrero.mynotes.ui.theme.colors.LocalMyNotesColors
 import com.rodrigoguerrero.mynotes.ui.theme.colors.darkColors
 import com.rodrigoguerrero.mynotes.ui.theme.colors.lightColors
@@ -40,6 +45,7 @@ fun MyNotesTheme(
         darkColors()
     }
 
+    val systemUiController = rememberSystemUiController()
     val padding = MyNotesPadding()
     val typography = typography()
 
@@ -49,11 +55,22 @@ fun MyNotesTheme(
         LocalMyNotesTypography provides typography,
         LocalMyNotesShapes provides Shapes
     ) {
+        systemUiController.setStatusBarColor(
+            color = MyNotesTheme.color.background,
+            darkIcons = !isSystemInDarkTheme()
+        )
         MaterialTheme(
             colorScheme = colors,
             shapes = Shapes,
-            typography = typography,
-            content = content
-        )
+            typography = typography
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .statusBarsPadding()
+            ) {
+                content()
+            }
+        }
     }
 }

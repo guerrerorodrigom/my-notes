@@ -13,7 +13,7 @@ data class MyNotesPadding(
     val s: Dp = 8.dp,
     val sm: Dp = 12.dp,
     val m: Dp = 16.dp,
-    val ml: Dp = 18.dp,
+    val ml: Dp = 20.dp,
     val l: Dp = 32.dp,
     val xl: Dp = 64.dp
 )
