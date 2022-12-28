@@ -4,6 +4,7 @@ object Android {
         const val compose = "1.3.2"
         const val composeNavigation = "2.5.3"
         const val coreKtx = "1.9.0"
+        const val icons = "1.3.1"
         const val lifecycleRuntimeKtx = "2.5.1"
         const val material = "1.0.1"
     }
@@ -13,6 +14,7 @@ object Android {
 
     object Compose {
         const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
+        const val icons = "androidx.compose.material:material-icons-extended:${Versions.icons}"
         const val material = "androidx.compose.material3:material3:${Versions.material}"
         const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
         const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"

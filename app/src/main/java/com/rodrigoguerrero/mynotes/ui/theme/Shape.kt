@@ -7,8 +7,9 @@ import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
     small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
+    medium = RoundedCornerShape(8.dp),
+    large = RoundedCornerShape(16.dp),
+    extraLarge = RoundedCornerShape(32.dp)
 )
 
 val LocalMyNotesShapes = staticCompositionLocalOf { Shapes }
