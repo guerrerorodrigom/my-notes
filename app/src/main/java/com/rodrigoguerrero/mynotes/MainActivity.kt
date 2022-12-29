@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
+import com.rodrigoguerrero.mynotes.ui.screens.EditNoteScreen
 import com.rodrigoguerrero.mynotes.ui.screens.NotesListScreen
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
@@ -24,7 +25,18 @@ class MainActivity : ComponentActivity() {
                     startDestination = Destinations.NOTES_LIST.route
                 ) {
                     composable(route = Destinations.NOTES_LIST.route) {
-                        NotesListScreen(currentDestination = Destinations.from(it.destination.route.orEmpty()))
+                        NotesListScreen(
+                            currentDestination = Destinations.from(it.destination.route.orEmpty()),
+                            onAddNote = { navController.navigate(Destinations.NEW_NOTE.route)}
+                        )
+                    }
+                    composable(route = Destinations.NEW_NOTE.route) {
+                        EditNoteScreen(
+                            onBackClicked = { navController.popBackStack() },
+                            onPinClicked = { },
+                            onAddReminder = { },
+                            onArchive = { }
+                        )
                     }
                 }
             }

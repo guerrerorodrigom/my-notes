@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
-fun BottomBar(
+fun MainBottomBar(
     modifier: Modifier = Modifier,
     onCheckboxClicked: () -> Unit,
     onDrawingClicked: () -> Unit,
@@ -62,7 +62,7 @@ fun BottomBar(
 private fun PreviewBottomBar() {
     MyNotesTheme {
         Surface(modifier = Modifier.padding(MyNotesTheme.padding.s)) {
-            BottomBar(
+            MainBottomBar(
                 onCheckboxClicked = { },
                 onDrawingClicked = { },
                 onMicrophoneClicked = { },

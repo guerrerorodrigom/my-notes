@@ -7,7 +7,8 @@ enum class Destinations(val route: String) {
     ARCHIVE("archive"),
     DELETED("deleted"),
     SETTINGS("settings"),
-    HELP("help");
+    HELP("help"),
+    NEW_NOTE("new-note");
 
     companion object {
         infix fun from(route: String): Destinations? = values().firstOrNull { it.route == route }

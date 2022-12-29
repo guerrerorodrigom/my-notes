@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rodrigoguerrero.mynotes.ui.components.BottomBar
 import com.rodrigoguerrero.mynotes.ui.components.DrawerMenu
+import com.rodrigoguerrero.mynotes.ui.components.MainBottomBar
 import com.rodrigoguerrero.mynotes.ui.components.SearchField
 import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
@@ -19,7 +19,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun NotesListScreen(
     modifier: Modifier = Modifier,
-    currentDestination: Destinations?
+    currentDestination: Destinations?,
+    onAddNote: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -35,12 +36,12 @@ fun NotesListScreen(
             )
         },
         bottomBar = {
-            BottomBar(
+            MainBottomBar(
                 onCheckboxClicked = { },
                 onDrawingClicked = { },
                 onMicrophoneClicked = { },
                 onImageClicked = { },
-                onAddClicked = { }
+                onAddClicked = onAddNote
             )
         },
         drawerContent = {
@@ -59,6 +60,6 @@ fun NotesListScreen(
 @Composable
 private fun PreviewNotesListScreen() {
     MyNotesTheme {
-        NotesListScreen(currentDestination = Destinations.NOTES_LIST)
+        NotesListScreen(currentDestination = Destinations.NOTES_LIST, onAddNote = { })
     }
 }
