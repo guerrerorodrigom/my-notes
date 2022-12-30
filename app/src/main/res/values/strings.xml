@@ -25,4 +25,13 @@
     <string name="option_collaborator">Collaborator</string>
     <string name="option_labels">Labels</string>
     <string name="bottom_sheet_color">Color</string>
+
+    <string name="empty_notes">Notes you add appear here</string>
+    <string name="empty_reminders">Notes with upcoming reminders appear here</string>
+    <string name="empty_archive">Your archived notes appear here</string>
+    <string name="empty_deleted">No notes in Recycle Bin</string>
+
+    <string name="title_archive">Archive</string>
+    <string name="title_reminders">Reminders</string>
+    <string name="title_deleted">Deleted</string>
 </resources>

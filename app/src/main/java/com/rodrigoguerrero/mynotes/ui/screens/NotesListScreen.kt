@@ -1,7 +1,6 @@
 package com.rodrigoguerrero.mynotes.ui.screens
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -12,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.ui.components.DrawerMenu
 import com.rodrigoguerrero.mynotes.ui.components.MainBottomBar
 import com.rodrigoguerrero.mynotes.ui.components.SearchField
+import com.rodrigoguerrero.mynotes.ui.models.EmptyNotes
 import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 import kotlinx.coroutines.launch
@@ -20,7 +20,8 @@ import kotlinx.coroutines.launch
 fun NotesListScreen(
     modifier: Modifier = Modifier,
     currentDestination: Destinations?,
-    onAddNote: () -> Unit
+    onAddNote: () -> Unit,
+    navigateTo: (Destinations) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -45,13 +46,11 @@ fun NotesListScreen(
             )
         },
         drawerContent = {
-            DrawerMenu(onItemSelected = {}, currentDestination = currentDestination)
+            DrawerMenu(onItemSelected = navigateTo, currentDestination = currentDestination)
         },
         backgroundColor = MyNotesTheme.color.background
     ) { padding ->
-        Column(modifier = modifier.padding(padding)) {
-
-        }
+        EmptyNotes(modifier = modifier.padding(padding))
     }
 }
 
@@ -60,6 +59,10 @@ fun NotesListScreen(
 @Composable
 private fun PreviewNotesListScreen() {
     MyNotesTheme {
-        NotesListScreen(currentDestination = Destinations.NOTES_LIST, onAddNote = { })
+        NotesListScreen(
+            currentDestination = Destinations.NOTES_LIST,
+            onAddNote = { },
+            navigateTo = { }
+        )
     }
 }
