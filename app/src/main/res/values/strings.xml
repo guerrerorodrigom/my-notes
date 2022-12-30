@@ -13,4 +13,16 @@
 
     <string name="hint_title">Title</string>
     <string name="hint_content">Note</string>
+
+    <string name="option_photo">Take photo</string>
+    <string name="option_image">Add image</string>
+    <string name="option_drawing">Drawing</string>
+    <string name="option_recording">Recording</string>
+    <string name="option_checkboxes">Tick boxes</string>
+    <string name="option_delete">Delete</string>
+    <string name="option_copy">Make a copy</string>
+    <string name="option_send">Send</string>
+    <string name="option_collaborator">Collaborator</string>
+    <string name="option_labels">Labels</string>
+    <string name="bottom_sheet_color">Color</string>
 </resources>
