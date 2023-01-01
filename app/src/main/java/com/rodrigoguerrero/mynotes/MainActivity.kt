@@ -11,7 +11,9 @@ import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.screens.EditNoteScreen
 import com.rodrigoguerrero.mynotes.ui.screens.MainScreen
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

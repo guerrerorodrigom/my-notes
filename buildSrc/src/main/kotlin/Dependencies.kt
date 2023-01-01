@@ -11,8 +11,9 @@ object Dependencies {
     object Gradle {
         const val androidAppGradle = "com.android.application"
         const val androidLibraryGradle = "com.android.library"
-        const val versionCheck = "com.github.ben-manes.versions"
+        const val hilt = "com.google.dagger.hilt.android"
         const val kotlinGradle = "org.jetbrains.kotlin.android"
+        const val versionCheck = "com.github.ben-manes.versions"
     }
 
     object Testing {

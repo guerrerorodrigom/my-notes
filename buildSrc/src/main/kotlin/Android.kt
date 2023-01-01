@@ -5,6 +5,7 @@ object Android {
         const val compose = "1.3.2"
         const val composeNavigation = "2.5.3"
         const val coreKtx = "1.9.0"
+        const val hilt = "2.44"
         const val icons = "1.3.1"
         const val lifecycleRuntimeKtx = "2.5.1"
         const val material3 = "1.0.1"
@@ -31,8 +32,14 @@ object Android {
         const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
     }
 
+    object Hilt {
+        const val android = "com.google.dagger:hilt-android:${Versions.hilt}"
+        const val androidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    }
+
     object Jetpack {
         const val room = "androidx.room:room-runtime:${Versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+        const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     }
 }

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -65,7 +66,11 @@ dependencies {
     implementation(Android.Accompanist.systemUiController)
 
     implementation(Android.Jetpack.room)
+    implementation(Android.Jetpack.roomKtx)
     kapt(Android.Jetpack.roomCompiler)
+
+    implementation(Android.Hilt.android)
+    kapt(Android.Hilt.androidCompiler)
 
     testImplementation(Dependencies.Testing.jUnit)
     
@@ -75,4 +80,8 @@ dependencies {
 
     debugImplementation(Android.Compose.tooling)
     debugImplementation(Android.Compose.uiTestManifest)
+}
+
+kapt {
+    correctErrorTypes = true
 }
