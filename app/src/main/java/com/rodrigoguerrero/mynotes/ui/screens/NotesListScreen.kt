@@ -21,7 +21,7 @@ fun NotesListScreen(
         topBar = {
             SearchField(
                 onMenuClicked = onMenuClicked,
-                modifier = Modifier.padding(MyNotesTheme.padding.m)
+                modifier = Modifier.padding(horizontal = MyNotesTheme.padding.m)
             )
         },
         bottomBar = {
