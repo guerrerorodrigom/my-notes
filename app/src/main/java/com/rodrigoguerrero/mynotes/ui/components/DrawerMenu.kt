@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
-import com.rodrigoguerrero.mynotes.ui.models.drawerNavigationItems
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.drawerNavigationItems
 import com.rodrigoguerrero.mynotes.ui.navigation.MainScreenDestinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 

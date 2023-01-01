@@ -1,4 +1,4 @@
-package com.rodrigoguerrero.mynotes.ui.models
+package com.rodrigoguerrero.mynotes.ui.models.uimodels
 
 import androidx.compose.ui.graphics.Color
 

@@ -2,16 +2,15 @@ package com.rodrigoguerrero.mynotes.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rodrigoguerrero.mynotes.ui.models.NoteOption
-import com.rodrigoguerrero.mynotes.ui.models.moreMenuOptions
-import com.rodrigoguerrero.mynotes.ui.models.noteMenuOptions
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.NoteOption
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.moreMenuOptions
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.noteMenuOptions
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable

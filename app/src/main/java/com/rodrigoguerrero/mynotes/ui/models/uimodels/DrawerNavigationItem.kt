@@ -1,4 +1,4 @@
-package com.rodrigoguerrero.mynotes.ui.models
+package com.rodrigoguerrero.mynotes.ui.models.uimodels
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
@@ -11,13 +11,13 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.rodrigoguerrero.mynotes.R
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Archive
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Deleted
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Help
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.NewLabel
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Notes
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Reminders
-import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Settings
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.Archive
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.Deleted
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.Help
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.NewLabel
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.Notes
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.Reminders
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.DrawerNavigationItem.Settings
 import com.rodrigoguerrero.mynotes.ui.navigation.MainScreenDestinations
 
 sealed class DrawerNavigationItem(

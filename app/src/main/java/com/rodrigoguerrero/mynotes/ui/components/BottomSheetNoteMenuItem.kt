@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.rodrigoguerrero.mynotes.ui.models.NoteOption
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.NoteOption
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable

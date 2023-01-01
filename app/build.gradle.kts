@@ -70,6 +70,7 @@ dependencies {
     kapt(Android.Jetpack.roomCompiler)
 
     implementation(Android.Hilt.android)
+    implementation(Android.Hilt.navigationCompose)
     kapt(Android.Hilt.androidCompiler)
 
     testImplementation(Dependencies.Testing.jUnit)

@@ -3,17 +3,23 @@ package com.rodrigoguerrero.mynotes.ui.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.rodrigoguerrero.mynotes.ui.components.MainBottomBar
 import com.rodrigoguerrero.mynotes.ui.components.SearchField
-import com.rodrigoguerrero.mynotes.ui.models.EmptyNotes
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.EmptyNotes
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
+import com.rodrigoguerrero.mynotes.ui.viewmodels.NotesListViewModel
 
 @Composable
 fun NotesListScreen(
     modifier: Modifier = Modifier,
+    viewModel: NotesListViewModel = hiltViewModel(),
     onAddNote: () -> Unit,
     onMenuClicked: () -> Unit
 ) {
@@ -35,7 +41,14 @@ fun NotesListScreen(
         },
         backgroundColor = MyNotesTheme.color.background
     ) { padding ->
-        EmptyNotes(modifier = modifier.padding(padding))
+
+        val state by viewModel.state.collectAsState()
+        when {
+            state.notes.isEmpty() -> EmptyNotes(modifier = modifier.padding(padding))
+            else -> {
+                Text(text = "notes!!")
+            }
+        }
     }
 }
 

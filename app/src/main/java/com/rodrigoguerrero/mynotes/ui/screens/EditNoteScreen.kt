@@ -4,12 +4,8 @@ import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -25,6 +21,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,28 +34,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.ui.components.BottomSheetColorSelector
 import com.rodrigoguerrero.mynotes.ui.components.BottomSheetNoteMenu
 import com.rodrigoguerrero.mynotes.ui.components.BottomSheetNoteMoreMenu
 import com.rodrigoguerrero.mynotes.ui.components.EditNoteBottomBar
 import com.rodrigoguerrero.mynotes.ui.components.EditNoteTopAppBar
-import com.rodrigoguerrero.mynotes.ui.models.EditNoteBottomSheet
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.EditNoteBottomSheet
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
+import com.rodrigoguerrero.mynotes.ui.viewmodels.EditNoteViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EditNoteScreen(
     modifier: Modifier = Modifier,
+    viewModel: EditNoteViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
     onPinClicked: () -> Unit,
     onAddReminder: () -> Unit,
     onArchive: () -> Unit
 ) {
-    var title by remember { mutableStateOf("") }
-    var content by remember { mutableStateOf("") }
+    val state by viewModel.state.collectAsState()
     var bottomSheetType: EditNoteBottomSheet by remember { mutableStateOf(EditNoteBottomSheet.Colors) }
 
     val coroutineScope = rememberCoroutineScope()
@@ -66,6 +64,11 @@ fun EditNoteScreen(
 
     BackHandler(bottomSheetState.isVisible) {
         coroutineScope.launch { bottomSheetState.hide() }
+    }
+
+    BackHandler(!bottomSheetState.isVisible) {
+        viewModel.saveNote()
+        onBackClicked()
     }
 
     ModalBottomSheetLayout(
@@ -92,7 +95,10 @@ fun EditNoteScreen(
                 EditNoteTopAppBar(
                     onAddReminder = onAddReminder,
                     onPinClicked = onPinClicked,
-                    onBackClicked = onBackClicked,
+                    onBackClicked = {
+                        viewModel.saveNote()
+                        onBackClicked()
+                    },
                     onArchive = onArchive
                 )
             },
@@ -127,8 +133,8 @@ fun EditNoteScreen(
             ) {
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = title,
-                    onValueChange = { title = it },
+                    value = state.title,
+                    onValueChange = viewModel::updateTitle,
                     textStyle = MyNotesTheme.typography.headlineSmall,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     keyboardActions = KeyboardActions(onNext = { focusRequester.requestFocus() }),
@@ -150,8 +156,8 @@ fun EditNoteScreen(
                     )
                 )
                 OutlinedTextField(
-                    value = content,
-                    onValueChange = { content = it },
+                    value = state.content,
+                    onValueChange = viewModel::updateContent,
                     textStyle = MyNotesTheme.typography.bodyLarge,
                     modifier = Modifier
                         .focusRequester(focusRequester)

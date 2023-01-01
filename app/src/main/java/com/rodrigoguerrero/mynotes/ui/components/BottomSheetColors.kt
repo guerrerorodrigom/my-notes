@@ -7,7 +7,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rodrigoguerrero.mynotes.R
-import com.rodrigoguerrero.mynotes.ui.models.NoteColor
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.NoteColor
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable

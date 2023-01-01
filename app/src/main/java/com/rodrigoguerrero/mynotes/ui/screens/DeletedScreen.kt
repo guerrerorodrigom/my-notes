@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
-import com.rodrigoguerrero.mynotes.ui.models.EmptyBin
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.EmptyBin
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable

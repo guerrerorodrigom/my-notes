@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
-import com.rodrigoguerrero.mynotes.ui.models.EmptyReminders
+import com.rodrigoguerrero.mynotes.ui.models.uimodels.EmptyReminders
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
