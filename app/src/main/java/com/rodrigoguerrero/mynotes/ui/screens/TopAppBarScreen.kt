@@ -11,7 +11,7 @@ import com.rodrigoguerrero.mynotes.ui.components.ScreenTopAppBar
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
-fun TopAppBarDrawerScreen(
+fun TopAppBarScreen(
     modifier: Modifier = Modifier,
     @StringRes titleId: Int,
     onMenuClicked: () -> Unit,

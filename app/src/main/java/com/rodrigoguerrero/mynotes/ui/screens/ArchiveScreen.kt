@@ -27,7 +27,7 @@ fun ArchiveScreen(
 ) {
     var listView by remember { mutableStateOf(false) }
 
-    TopAppBarDrawerScreen(
+    TopAppBarScreen(
         titleId = R.string.title_archive,
         actions = {
             IconButton(onClick = onSearchClicked) {

@@ -14,7 +14,7 @@ fun DeletedScreen(
     modifier: Modifier = Modifier,
     onMenuClicked: () -> Unit
 ) {
-    TopAppBarDrawerScreen(
+    TopAppBarScreen(
         titleId = R.string.title_deleted,
         actions = { },
         onMenuClicked = onMenuClicked

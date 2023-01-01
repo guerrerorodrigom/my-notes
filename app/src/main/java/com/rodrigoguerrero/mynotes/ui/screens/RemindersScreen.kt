@@ -27,7 +27,7 @@ fun RemindersScreen(
 ) {
     var listView by remember { mutableStateOf(false) }
 
-    TopAppBarDrawerScreen(
+    TopAppBarScreen(
         titleId = R.string.title_reminders,
         actions = {
             IconButton(onClick = onSearchClicked) {
