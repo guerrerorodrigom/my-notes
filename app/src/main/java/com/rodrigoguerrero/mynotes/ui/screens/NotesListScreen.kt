@@ -3,36 +3,24 @@ package com.rodrigoguerrero.mynotes.ui.screens
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rodrigoguerrero.mynotes.ui.components.DrawerMenu
 import com.rodrigoguerrero.mynotes.ui.components.MainBottomBar
 import com.rodrigoguerrero.mynotes.ui.components.SearchField
 import com.rodrigoguerrero.mynotes.ui.models.EmptyNotes
-import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
-import kotlinx.coroutines.launch
 
 @Composable
 fun NotesListScreen(
     modifier: Modifier = Modifier,
-    currentDestination: Destinations?,
     onAddNote: () -> Unit,
-    navigateTo: (Destinations) -> Unit
+    onMenuClicked: () -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
-    val coroutineScope = rememberCoroutineScope()
-
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
             SearchField(
-                onMenuClicked = {
-                    coroutineScope.launch { scaffoldState.drawerState.open() }
-                },
+                onMenuClicked = onMenuClicked,
                 modifier = Modifier.padding(MyNotesTheme.padding.m)
             )
         },
@@ -45,9 +33,6 @@ fun NotesListScreen(
                 onAddClicked = onAddNote
             )
         },
-        drawerContent = {
-            DrawerMenu(onItemSelected = navigateTo, currentDestination = currentDestination)
-        },
         backgroundColor = MyNotesTheme.color.background
     ) { padding ->
         EmptyNotes(modifier = modifier.padding(padding))
@@ -59,10 +44,6 @@ fun NotesListScreen(
 @Composable
 private fun PreviewNotesListScreen() {
     MyNotesTheme {
-        NotesListScreen(
-            currentDestination = Destinations.NOTES_LIST,
-            onAddNote = { },
-            navigateTo = { }
-        )
+        NotesListScreen(onAddNote = { }, onMenuClicked = { })
     }
 }

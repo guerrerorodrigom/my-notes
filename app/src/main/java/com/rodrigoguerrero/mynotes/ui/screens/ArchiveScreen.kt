@@ -17,22 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.ui.models.EmptyArchive
-import com.rodrigoguerrero.mynotes.ui.models.EmptyReminders
-import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
 fun ArchiveScreen(
     modifier: Modifier = Modifier,
-    currentDestination: Destinations?,
-    navigateTo: (Destinations) -> Unit,
-    onSearchClicked: () -> Unit
+    onSearchClicked: () -> Unit,
+    onMenuClicked: () -> Unit
 ) {
     var listView by remember { mutableStateOf(false) }
 
     TopAppBarDrawerScreen(
-        navigateTo = navigateTo,
-        currentDestination = currentDestination,
         titleId = R.string.title_archive,
         actions = {
             IconButton(onClick = onSearchClicked) {
@@ -44,7 +39,8 @@ fun ArchiveScreen(
                     contentDescription = null
                 )
             }
-        }
+        },
+        onMenuClicked = onMenuClicked
     ) { padding ->
         EmptyArchive(modifier = modifier.padding(padding))
     }
@@ -55,6 +51,6 @@ fun ArchiveScreen(
 @Composable
 private fun PreviewArchiveScreen() {
     MyNotesTheme {
-        ArchiveScreen(currentDestination = null, navigateTo = { }, onSearchClicked = { })
+        ArchiveScreen(onSearchClicked = { }, onMenuClicked = { })
     }
 }

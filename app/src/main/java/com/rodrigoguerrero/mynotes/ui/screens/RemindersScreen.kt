@@ -17,21 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.ui.models.EmptyReminders
-import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
 fun RemindersScreen(
     modifier: Modifier = Modifier,
-    currentDestination: Destinations?,
-    navigateTo: (Destinations) -> Unit,
-    onSearchClicked: () -> Unit
+    onSearchClicked: () -> Unit,
+    onMenuClicked: () -> Unit
 ) {
     var listView by remember { mutableStateOf(false) }
 
     TopAppBarDrawerScreen(
-        navigateTo = navigateTo,
-        currentDestination = currentDestination,
         titleId = R.string.title_reminders,
         actions = {
             IconButton(onClick = onSearchClicked) {
@@ -43,7 +39,8 @@ fun RemindersScreen(
                     contentDescription = null
                 )
             }
-        }
+        },
+        onMenuClicked = onMenuClicked
     ) { padding ->
         EmptyReminders(modifier = modifier.padding(padding))
     }
@@ -54,6 +51,6 @@ fun RemindersScreen(
 @Composable
 private fun PreviewRemindersScreen() {
     MyNotesTheme {
-        RemindersScreen(currentDestination = null, navigateTo = { }, onSearchClicked = { })
+        RemindersScreen(onSearchClicked = { }, onMenuClicked = { })
     }
 }

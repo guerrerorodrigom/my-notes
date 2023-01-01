@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem
 import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
+import com.rodrigoguerrero.mynotes.ui.navigation.MainScreenDestinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
@@ -27,7 +28,7 @@ fun DrawerItem(
     modifier: Modifier = Modifier,
     item: DrawerNavigationItem,
     isSelected: Boolean,
-    onClicked: (Destinations) -> Unit
+    onClicked: (MainScreenDestinations) -> Unit
 ) {
     val (backgroundColor, shape) = if (isSelected) {
         MyNotesTheme.color.primary.copy(alpha = 0.5f) to RoundedCornerShape(

@@ -8,12 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
-import com.rodrigoguerrero.mynotes.ui.navigation.popUpToTop
-import com.rodrigoguerrero.mynotes.ui.screens.ArchiveScreen
-import com.rodrigoguerrero.mynotes.ui.screens.DeletedScreen
 import com.rodrigoguerrero.mynotes.ui.screens.EditNoteScreen
-import com.rodrigoguerrero.mynotes.ui.screens.NotesListScreen
-import com.rodrigoguerrero.mynotes.ui.screens.RemindersScreen
+import com.rodrigoguerrero.mynotes.ui.screens.MainScreen
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,15 +22,11 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = Destinations.NOTES_LIST.route
+                    startDestination = Destinations.MAIN_SCREEN.route
                 ) {
-                    composable(route = Destinations.NOTES_LIST.route) {
-                        NotesListScreen(
-                            currentDestination = Destinations.from(it.destination.route.orEmpty()),
-                            onAddNote = { navController.navigate(Destinations.NEW_NOTE.route) },
-                            navigateTo = { destination ->
-                                navController.navigate(destination.route) { popUpToTop(navController) }
-                            }
+                    composable(route = Destinations.MAIN_SCREEN.route) {
+                        MainScreen(
+                            onAddNote = { navController.navigate(Destinations.NEW_NOTE.route) }
                         )
                     }
                     composable(route = Destinations.NEW_NOTE.route) {
@@ -43,32 +35,6 @@ class MainActivity : ComponentActivity() {
                             onPinClicked = { },
                             onAddReminder = { },
                             onArchive = { }
-                        )
-                    }
-                    composable(route = Destinations.REMINDERS.route) {
-                        RemindersScreen(
-                            currentDestination = Destinations.from(it.destination.route.orEmpty()),
-                            navigateTo = { destination ->
-                                navController.navigate(destination.route) { popUpToTop(navController) }
-                            },
-                            onSearchClicked = { }
-                        )
-                    }
-                    composable(route = Destinations.ARCHIVE.route) {
-                        ArchiveScreen(
-                            currentDestination = Destinations.from(it.destination.route.orEmpty()),
-                            navigateTo = { destination ->
-                                navController.navigate(destination.route) { popUpToTop(navController) }
-                            },
-                            onSearchClicked = { }
-                        )
-                    }
-                    composable(route = Destinations.DELETED.route) {
-                        DeletedScreen(
-                            currentDestination = Destinations.from(it.destination.route.orEmpty()),
-                            navigateTo = { destination ->
-                                navController.navigate(destination.route) { popUpToTop(navController) }
-                            }
                         )
                     }
                 }

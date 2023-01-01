@@ -18,53 +18,53 @@ import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.NewLabel
 import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Notes
 import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Reminders
 import com.rodrigoguerrero.mynotes.ui.models.DrawerNavigationItem.Settings
-import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
+import com.rodrigoguerrero.mynotes.ui.navigation.MainScreenDestinations
 
 sealed class DrawerNavigationItem(
     val icon: ImageVector,
     @StringRes val title: Int,
-    val destination: Destinations
+    val destination: MainScreenDestinations
 ) {
     object Notes : DrawerNavigationItem(
         icon = Icons.Outlined.Lightbulb,
         title = R.string.menu_notes,
-        destination = Destinations.NOTES_LIST
+        destination = MainScreenDestinations.NOTES_LIST
     )
 
     object Reminders : DrawerNavigationItem(
         icon = Icons.Outlined.Notifications,
         title = R.string.menu_reminders,
-        destination = Destinations.REMINDERS
+        destination = MainScreenDestinations.REMINDERS
     )
 
     object NewLabel : DrawerNavigationItem(
         icon = Icons.Default.Add,
         title = R.string.menu_label,
-        destination = Destinations.NEW_LABEL
+        destination = MainScreenDestinations.NEW_LABEL
     )
 
     object Archive : DrawerNavigationItem(
         icon = Icons.Outlined.Archive,
         title = R.string.menu_archive,
-        destination = Destinations.ARCHIVE
+        destination = MainScreenDestinations.ARCHIVE
     )
 
     object Deleted : DrawerNavigationItem(
         icon = Icons.Outlined.Delete,
         title = R.string.menu_deleted,
-        destination = Destinations.DELETED
+        destination = MainScreenDestinations.DELETED
     )
 
     object Settings : DrawerNavigationItem(
         icon = Icons.Outlined.Settings,
         title = R.string.menu_settings,
-        destination = Destinations.SETTINGS
+        destination = MainScreenDestinations.SETTINGS
     )
 
     object Help : DrawerNavigationItem(
         icon = Icons.Outlined.Help,
         title = R.string.menu_help,
-        destination = Destinations.HELP
+        destination = MainScreenDestinations.HELP
     )
 }
 

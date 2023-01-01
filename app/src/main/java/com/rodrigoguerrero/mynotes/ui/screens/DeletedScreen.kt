@@ -7,20 +7,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.ui.models.EmptyBin
-import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
 import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
 
 @Composable
 fun DeletedScreen(
     modifier: Modifier = Modifier,
-    currentDestination: Destinations?,
-    navigateTo: (Destinations) -> Unit,
+    onMenuClicked: () -> Unit
 ) {
     TopAppBarDrawerScreen(
-        navigateTo = navigateTo,
-        currentDestination = currentDestination,
         titleId = R.string.title_deleted,
-        actions = { }
+        actions = { },
+        onMenuClicked = onMenuClicked
     ) { padding ->
         EmptyBin(modifier = modifier.padding(padding))
     }
@@ -31,6 +28,6 @@ fun DeletedScreen(
 @Composable
 private fun PreviewDeletedScreen() {
     MyNotesTheme {
-        DeletedScreen(currentDestination = null, navigateTo = { })
+        DeletedScreen(onMenuClicked = { })
     }
 }
