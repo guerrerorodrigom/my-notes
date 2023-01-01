@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -62,6 +63,9 @@ dependencies {
     implementation(Android.Compose.navigation)
     implementation(Android.Compose.icons)
     implementation(Android.Accompanist.systemUiController)
+
+    implementation(Android.Jetpack.room)
+    kapt(Android.Jetpack.roomCompiler)
 
     testImplementation(Dependencies.Testing.jUnit)
     

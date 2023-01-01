@@ -9,6 +9,7 @@ object Android {
         const val lifecycleRuntimeKtx = "2.5.1"
         const val material3 = "1.0.1"
         const val material = "1.3.1"
+        const val room = "2.4.3"
     }
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
@@ -31,6 +32,7 @@ object Android {
     }
 
     object Jetpack {
-
+        const val room = "androidx.room:room-runtime:${Versions.room}"
+        const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     }
 }
