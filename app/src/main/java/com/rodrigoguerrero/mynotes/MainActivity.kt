@@ -7,10 +7,10 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rodrigoguerrero.mynotes.ui.navigation.Destinations
-import com.rodrigoguerrero.mynotes.ui.screens.EditNoteScreen
-import com.rodrigoguerrero.mynotes.ui.screens.MainScreen
-import com.rodrigoguerrero.mynotes.ui.theme.MyNotesTheme
+import com.rodrigoguerrero.mynotes.navigation.Destinations
+import com.rodrigoguerrero.mynotes.screens.EditNoteScreen
+import com.rodrigoguerrero.mynotes.screens.MainScreen
+import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
