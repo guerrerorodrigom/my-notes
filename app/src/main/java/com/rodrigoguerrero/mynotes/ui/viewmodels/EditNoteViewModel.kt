@@ -3,8 +3,8 @@ package com.rodrigoguerrero.mynotes.ui.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rodrigoguerrero.mynotes.domain.models.NoteModel
-import com.rodrigoguerrero.mynotes.domain.usecases.CreateNewNoteUseCase
+import com.rodrigoguerrero.domain.models.NoteModel
+import com.rodrigoguerrero.domain.usecases.CreateNewNoteUseCase
 import com.rodrigoguerrero.mynotes.ui.models.statemodels.NoteState
 import com.rodrigoguerrero.mynotes.ui.models.uimodels.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class EditNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val createNewNoteUseCase: CreateNewNoteUseCase
+    private val createNewNoteUseCase: com.rodrigoguerrero.domain.usecases.CreateNewNoteUseCase
 ) : ViewModel() {
 
     private val noteId: Int? = savedStateHandle["id"]
@@ -42,7 +42,7 @@ class EditNoteViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             if (noteId == null) {
                 createNewNoteUseCase(
-                    NoteModel(
+                    com.rodrigoguerrero.domain.models.NoteModel(
                         title = state.value.title,
                         content = state.value.content,
                         created = "",

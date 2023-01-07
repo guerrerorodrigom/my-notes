@@ -7,7 +7,6 @@ plugins {
     id(Dependencies.Gradle.kotlinGradle) version Dependencies.Versions.gradleKotlinPlugin apply false
     id(Dependencies.Gradle.versionCheck) version Dependencies.Versions.versionCheck
     id(Dependencies.Gradle.hilt) version Android.Versions.hilt apply false
-
 }
 
 tasks.register("clean", Delete::class) {

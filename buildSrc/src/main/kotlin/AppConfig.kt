@@ -1,5 +1,6 @@
 object AppConfig {
     const val applicationId = "com.rodrigoguerrero.mynotes"
+    const val dataPackage = "com.rodrigoguerrero.data"
     const val compileSdk = 33
     const val minSdk = 24
     const val targetSdk = 33

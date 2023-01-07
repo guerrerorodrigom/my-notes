@@ -2,9 +2,9 @@ package com.rodrigoguerrero.mynotes.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rodrigoguerrero.mynotes.domain.models.NoteModel
-import com.rodrigoguerrero.mynotes.domain.usecases.CreateNewNoteUseCase
-import com.rodrigoguerrero.mynotes.domain.usecases.RetrieveAllNotesUseCase
+import com.rodrigoguerrero.domain.models.NoteModel
+import com.rodrigoguerrero.domain.usecases.CreateNewNoteUseCase
+import com.rodrigoguerrero.domain.usecases.RetrieveAllNotesUseCase
 import com.rodrigoguerrero.mynotes.ui.models.statemodels.NotesListState
 import com.rodrigoguerrero.mynotes.ui.models.uimodels.Note
 import dagger.hilt.android.lifecycle.HiltViewModel

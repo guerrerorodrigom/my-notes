@@ -53,6 +53,7 @@ android {
 
 dependencies {
 
+    implementation(project(mapOf("path" to ":domain")))
     implementation(Android.coreKtx)
     implementation(Android.lifecycleRuntimeKtx)
 
@@ -64,10 +65,6 @@ dependencies {
     implementation(Android.Compose.navigation)
     implementation(Android.Compose.icons)
     implementation(Android.Accompanist.systemUiController)
-
-    implementation(Android.Jetpack.room)
-    implementation(Android.Jetpack.roomKtx)
-    kapt(Android.Jetpack.roomCompiler)
 
     implementation(Android.Hilt.android)
     implementation(Android.Hilt.navigationCompose)
