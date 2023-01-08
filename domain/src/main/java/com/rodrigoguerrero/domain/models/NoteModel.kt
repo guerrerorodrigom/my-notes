@@ -4,7 +4,7 @@ data class NoteModel(
     val id: Int? = null,
     val title: String?,
     val content: String?,
-    val created: String,
-    val modified: String,
+    val created: String? = null,
+    val modified: String? = null,
     val isPinned: Boolean
 )

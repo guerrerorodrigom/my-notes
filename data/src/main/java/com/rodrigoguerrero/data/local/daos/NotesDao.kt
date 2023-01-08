@@ -14,6 +14,9 @@ internal interface NotesDao {
     @Query("SELECT * FROM notes ORDER BY modified_date DESC")
     suspend fun getAllNotes(): List<NoteEntity>
 
+    @Query("SELECT * FROM notes WHERE id = :id")
+    suspend fun getNote(id: Int): NoteEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(noteEntity: NoteEntity): Long
 

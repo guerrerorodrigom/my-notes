@@ -16,14 +16,13 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class NotesListViewModel @Inject constructor(
-    private val createNewNoteUseCase: CreateNewNoteUseCase,
     private val retrieveAllNotesUseCase: RetrieveAllNotesUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NotesListState())
     val state: StateFlow<NotesListState> = _state
 
-    init {
+    fun loadNotes() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = retrieveAllNotesUseCase()
             _state.update { state ->

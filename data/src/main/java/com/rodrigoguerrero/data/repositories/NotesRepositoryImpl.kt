@@ -18,4 +18,8 @@ internal class NotesRepositoryImpl @Inject constructor(
     override suspend fun getAllNotes(): List<NoteDto> {
         return notesDao.getAllNotes().map { it.mapToDto() }
     }
+
+    override suspend fun getNote(id: Int): NoteDto {
+        return notesDao.getNote(id).mapToDto()
+    }
 }

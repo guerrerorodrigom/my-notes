@@ -24,16 +24,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
+import com.rodrigoguerrero.mynotes.models.uimodels.ListMode
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchField(
     modifier: Modifier = Modifier,
-    onMenuClicked: () -> Unit
+    onMenuClicked: () -> Unit,
+    onModeChanged: (ListMode) -> Unit
 ) {
     var value by remember { mutableStateOf("") }
-    var listView by remember { mutableStateOf(false) }
+    var listMode by remember { mutableStateOf(ListMode.LIST) }
 
     TextField(
         value = value,
@@ -49,9 +51,22 @@ fun SearchField(
         },
         shape = MyNotesTheme.shapes.extraLarge,
         trailingIcon = {
-            IconButton(onClick = { listView = !listView }) {
+            IconButton(
+                onClick = {
+                    listMode = if (listMode == ListMode.LIST) {
+                        ListMode.GRID
+                    } else {
+                        ListMode.LIST
+                    }
+                    onModeChanged(listMode)
+                }
+            ) {
                 Icon(
-                    imageVector = if (listView) Icons.Default.GridView else Icons.Outlined.ViewAgenda,
+                    imageVector = if (listMode == ListMode.LIST) {
+                        Icons.Default.GridView
+                    } else {
+                        Icons.Outlined.ViewAgenda
+                    },
                     contentDescription = null
                 )
             }
@@ -70,7 +85,7 @@ fun SearchField(
 private fun PreviewSearchField() {
     MyNotesTheme {
         Surface(modifier = Modifier.padding(MyNotesTheme.padding.s)) {
-            SearchField { }
+            SearchField(onMenuClicked = { }) { }
         }
     }
 }
