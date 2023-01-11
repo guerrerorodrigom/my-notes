@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    onAddNote: () -> Unit
+    onAddNote: () -> Unit,
+    onNoteSelected: (Int) -> Unit
 ) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
@@ -51,7 +52,8 @@ fun MainScreen(
             composable(route = NOTES_LIST.route) {
                 NotesListScreen(
                     onAddNote = onAddNote,
-                    onMenuClicked = openDrawer(coroutineScope, scaffoldState)
+                    onMenuClicked = openDrawer(coroutineScope, scaffoldState),
+                    onNoteSelected = onNoteSelected
                 )
             }
             composable(route = REMINDERS.route) {

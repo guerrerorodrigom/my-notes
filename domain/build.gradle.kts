@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    namespace = "com.rodrigoguerrero.domain"
-    compileSdk = 32
+    namespace = AppConfig.domainPackage
+    compileSdk = AppConfig.compileSdk
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 32
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -41,6 +41,8 @@ dependencies {
 
     implementation(Android.Hilt.android)
     kapt(Android.Hilt.androidCompiler)
+
+    implementation(Dependencies.Kotlin.datetime)
 
     testImplementation(Dependencies.Testing.jUnit)
 }

@@ -32,7 +32,8 @@ fun NotesListScreen(
     modifier: Modifier = Modifier,
     viewModel: NotesListViewModel = hiltViewModel(),
     onAddNote: () -> Unit,
-    onMenuClicked: () -> Unit
+    onMenuClicked: () -> Unit,
+    onNoteSelected: (Int) -> Unit
 ) {
     var columns by remember { mutableStateOf(1) }
 
@@ -73,13 +74,13 @@ fun NotesListScreen(
             else -> {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(columns),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().padding(padding),
                     contentPadding = PaddingValues(all = MyNotesTheme.padding.m),
                     verticalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.m),
                     horizontalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.m)
                 ) {
                     items(state.notes) {
-                        NoteCard(note = it)
+                        NoteCard(note = it, onSelected = onNoteSelected)
                     }
                 }
             }
@@ -92,6 +93,6 @@ fun NotesListScreen(
 @Composable
 private fun PreviewNotesListScreen() {
     MyNotesTheme {
-        NotesListScreen(onAddNote = { }, onMenuClicked = { })
+        NotesListScreen(onAddNote = { }, onMenuClicked = { }, onNoteSelected = { })
     }
 }

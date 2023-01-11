@@ -2,6 +2,7 @@ package com.rodrigoguerrero.mynotes.navigation
 
 enum class Destinations(val route: String) {
     MAIN_SCREEN("main-screen"),
+    EDIT_NOTE("edit-note"),
     NEW_NOTE("new-note");
 }
 

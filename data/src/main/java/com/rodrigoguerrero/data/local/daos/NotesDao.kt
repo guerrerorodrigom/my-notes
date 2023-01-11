@@ -7,12 +7,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.rodrigoguerrero.data.local.entities.NoteEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface NotesDao {
 
     @Query("SELECT * FROM notes ORDER BY modified_date DESC")
-    suspend fun getAllNotes(): List<NoteEntity>
+    fun getAllNotes(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE id = :id")
     suspend fun getNote(id: Int): NoteEntity

@@ -1,6 +1,8 @@
 package com.rodrigoguerrero.mynotes.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -8,6 +10,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -19,10 +22,16 @@ import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 @Composable
 fun NoteCard(
     modifier: Modifier = Modifier,
-    note: Note
+    note: Note,
+    onSelected: (Int) -> Unit
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+
     Card(
-        modifier = modifier,
+        modifier = modifier.clickable(
+            indication = null,
+            interactionSource = interactionSource
+        ) { onSelected(note.id) },
         shape = MyNotesTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(id = R.dimen.card_elevation)
@@ -58,6 +67,6 @@ fun NoteCard(
 @Composable
 private fun PreviewNoteCard() {
     MyNotesTheme {
-        NoteCard(note = Note(title = "Note title", content = "Note content", id = 1))
+        NoteCard(note = Note(title = "Note title", content = "Note content", id = 1)) { }
     }
 }

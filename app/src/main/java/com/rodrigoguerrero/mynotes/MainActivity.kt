@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.rodrigoguerrero.mynotes.navigation.Destinations
 import com.rodrigoguerrero.mynotes.screens.EditNoteScreen
 import com.rodrigoguerrero.mynotes.screens.MainScreen
@@ -28,10 +30,26 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = Destinations.MAIN_SCREEN.route) {
                         MainScreen(
-                            onAddNote = { navController.navigate(Destinations.NEW_NOTE.route) }
+                            onAddNote = { navController.navigate(Destinations.NEW_NOTE.route) },
+                            onNoteSelected = { id ->
+                                navController.navigate("${Destinations.EDIT_NOTE.route}/$id")
+                            }
                         )
                     }
                     composable(route = Destinations.NEW_NOTE.route) {
+                        EditNoteScreen(
+                            onBackClicked = { navController.popBackStack() },
+                            onPinClicked = { },
+                            onAddReminder = { },
+                            onArchive = { }
+                        )
+                    }
+                    composable(
+                        route = "${Destinations.EDIT_NOTE.route}/{id}",
+                        arguments = listOf(
+                            navArgument("id") { type = NavType.IntType }
+                        )
+                    ) {
                         EditNoteScreen(
                             onBackClicked = { navController.popBackStack() },
                             onPinClicked = { },

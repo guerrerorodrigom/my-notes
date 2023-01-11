@@ -70,6 +70,8 @@ dependencies {
     implementation(Android.Hilt.navigationCompose)
     kapt(Android.Hilt.androidCompiler)
 
+    implementation(Dependencies.Kotlin.datetime)
+
     testImplementation(Dependencies.Testing.jUnit)
     
     androidTestImplementation(Dependencies.Testing.androidJUnit)

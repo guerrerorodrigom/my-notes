@@ -2,7 +2,6 @@ package com.rodrigoguerrero.mynotes.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rodrigoguerrero.domain.usecases.CreateNewNoteUseCase
 import com.rodrigoguerrero.domain.usecases.RetrieveAllNotesUseCase
 import com.rodrigoguerrero.mynotes.models.statemodels.NotesListState
 import com.rodrigoguerrero.mynotes.models.uimodels.Note
@@ -11,6 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -24,14 +24,15 @@ class NotesListViewModel @Inject constructor(
 
     fun loadNotes() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = retrieveAllNotesUseCase()
-            _state.update { state ->
-                state.copy(
-                    notes = result.notes
-                        .filterNot { it.id == null }
-                        .map { Note(it.id!!, it.title, it.content) },
-                    isLoading = false
-                )
+            retrieveAllNotesUseCase().collectLatest { notes ->
+                _state.update { state ->
+                    state.copy(
+                        notes = notes
+                            .filterNot { it.id == null }
+                            .map { Note(it.id!!, it.title, it.content) },
+                        isLoading = false
+                    )
+                }
             }
         }
     }

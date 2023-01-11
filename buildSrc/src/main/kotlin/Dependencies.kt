@@ -1,6 +1,7 @@
 object Dependencies {
     object Versions {
         const val androidJUnit = "1.1.4"
+        const val dateTime = "0.4.0"
         const val espresso = "3.5.0"
         const val gradleAndroid = "7.3.1"
         const val gradleKotlinPlugin = "1.7.20"
@@ -14,6 +15,10 @@ object Dependencies {
         const val hilt = "com.google.dagger.hilt.android"
         const val kotlinGradle = "org.jetbrains.kotlin.android"
         const val versionCheck = "com.github.ben-manes.versions"
+    }
+
+    object Kotlin {
+        const val datetime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.dateTime}"
     }
 
     object Testing {
