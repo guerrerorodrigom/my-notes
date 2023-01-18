@@ -3,6 +3,7 @@ object Android {
         const val accompanist = "0.28.0"
         const val activityCompose = "1.6.1"
         const val compose = "1.3.2"
+        const val composeFoundation = "1.3.1"
         const val composeNavigation = "2.5.3"
         const val coreKtx = "1.9.0"
         const val hilt = "2.44"
@@ -23,6 +24,7 @@ object Android {
 
     object Compose {
         const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
+        const val foundation = "androidx.compose.foundation:foundation:${Versions.composeFoundation}"
         const val icons = "androidx.compose.material:material-icons-extended:${Versions.icons}"
         const val material3 = "androidx.compose.material3:material3:${Versions.material3}"
         const val material = "androidx.compose.material:material:${Versions.material}"

@@ -1,13 +1,13 @@
 package com.rodrigoguerrero.mynotes.screens
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +27,7 @@ import com.rodrigoguerrero.mynotes.models.uimodels.ListMode
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 import com.rodrigoguerrero.mynotes.viewmodels.NotesListViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NotesListScreen(
     modifier: Modifier = Modifier,
@@ -72,15 +73,17 @@ fun NotesListScreen(
         when {
             state.notes.isEmpty() -> EmptyNotes(modifier = modifier.padding(padding))
             else -> {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(columns),
-                    modifier = Modifier.fillMaxSize().padding(padding),
-                    contentPadding = PaddingValues(all = MyNotesTheme.padding.m),
+                LazyVerticalStaggeredGrid(
+                    columns = StaggeredGridCells.Fixed(columns),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                     verticalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.m),
-                    horizontalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.m)
+                    horizontalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.m),
+                    contentPadding = PaddingValues(all = MyNotesTheme.padding.m)
                 ) {
-                    items(state.notes) {
-                        NoteCard(note = it, onSelected = onNoteSelected)
+                    items(state.notes.count()) { index ->
+                        NoteCard(note = state.notes[index], onSelected = onNoteSelected)
                     }
                 }
             }

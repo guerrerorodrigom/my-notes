@@ -63,6 +63,8 @@ dependencies {
     implementation(Android.Compose.material3)
     implementation(Android.Compose.material)
     implementation(Android.Compose.navigation)
+    implementation(Android.Compose.foundation)
+//    implementation("androidx.compose.foundation:foundation:1.3.1")
     implementation(Android.Compose.icons)
     implementation(Android.Accompanist.systemUiController)
 
