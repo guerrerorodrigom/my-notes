@@ -7,4 +7,6 @@ data class NoteModel(
     val created: String? = null,
     val modified: String? = null,
     val isPinned: Boolean? = null
-)
+) {
+    fun isEmpty() = title.isNullOrEmpty() && content.isNullOrEmpty()
+}

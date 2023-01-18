@@ -34,4 +34,8 @@ internal class NotesRepositoryImpl @Inject constructor(
     override suspend fun getNote(id: Int): NoteDto {
         return notesDao.getNote(id).mapToDto()
     }
+
+    override suspend fun deleteNote(id: Int) {
+        notesDao.delete(id)
+    }
 }
