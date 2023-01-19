@@ -9,8 +9,8 @@ internal data class NoteEntity(
     @PrimaryKey val id: Int? = null,
     val title: String? = null,
     val content: String? = null,
-    @ColumnInfo(name = "created_date") val createdDate: Long? = null,
-    @ColumnInfo(name = "modified_date") val modifiedDate: Long? = null,
+    @ColumnInfo(name = "created_date") val createdDate: String? = null,
+    @ColumnInfo(name = "modified_date") val modifiedDate: String? = null,
     val color: Int? = null,
     val isPinned: Boolean? = null
 )

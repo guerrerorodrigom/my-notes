@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rodrigoguerrero.mynotes.components.EditNoteBottomBar
@@ -24,6 +25,7 @@ import com.rodrigoguerrero.mynotes.components.EditNoteTopAppBar
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ContentState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ErrorState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.LoadingState
+import com.rodrigoguerrero.mynotes.models.statemodels.formatDate
 import com.rodrigoguerrero.mynotes.models.uimodels.EditNoteBottomSheet
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 import com.rodrigoguerrero.mynotes.viewmodels.EditNoteViewModel
@@ -61,6 +63,7 @@ fun EditNoteScreen(
         },
         sheetState = bottomSheetState
     ) {
+        val currentState = state
         Scaffold(
             modifier = Modifier.imePadding(),
             topBar = {
@@ -87,12 +90,17 @@ fun EditNoteScreen(
                     onShowMenu = {
                         bottomSheetType = EditNoteBottomSheet.More
                         coroutineScope.launch { bottomSheetState.show() }
+                    },
+                    time = if (currentState is ContentState) {
+                        formatDate(currentState.editedDate, LocalContext.current)
+                    } else {
+                        ""
                     }
                 )
             }
         ) { padding ->
 
-            when (val currentState = state) {
+            when (currentState) {
                 LoadingState -> {}
                 ErrorState -> {}
                 is ContentState -> EditNoteContent(currentState, padding, viewModel)

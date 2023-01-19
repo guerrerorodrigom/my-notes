@@ -12,13 +12,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 
 @Composable
 fun EditNoteBottomBar(
     modifier: Modifier = Modifier,
+    time: String,
     onShowOptions: () -> Unit,
     onShowColors: () -> Unit,
     onShowMenu: () -> Unit
@@ -34,7 +37,11 @@ fun EditNoteBottomBar(
             Icon(imageVector = Icons.Outlined.Palette, contentDescription = null)
         }
 
-        Text(text = "Edited 10:35", modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
+        Text(
+            text = stringResource(id = R.string.edited_time, time),
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.Center
+        )
         IconButton(onClick = onShowMenu) {
             Icon(imageVector = Icons.Outlined.MoreVert, contentDescription = null)
         }
@@ -49,7 +56,8 @@ private fun PreviewEditNoteBottomBar() {
         EditNoteBottomBar(
             onShowOptions = { },
             onShowColors = { },
-            onShowMenu = { }
+            onShowMenu = { },
+            time = "10:35"
         )
     }
 }

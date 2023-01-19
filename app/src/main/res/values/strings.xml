@@ -13,6 +13,7 @@
 
     <string name="hint_title">Title</string>
     <string name="hint_content">Note</string>
+    <string name="edited_time">Edited %1$s</string>
 
     <string name="option_photo">Take photo</string>
     <string name="option_image">Add image</string>
@@ -34,4 +35,9 @@
     <string name="title_archive">Archive</string>
     <string name="title_reminders">Reminders</string>
     <string name="title_deleted">Deleted</string>
+
+    <string name="edited_more_than_a_year_ago">%1$s %2$s %3$s</string>
+    <string name="edited_today">%1$s:%2$s</string>
+    <string name="edited_yesterday">yesterday, %1$s:%2$s</string>
+    <string name="edited_month_day">%1$s %2$s</string>
 </resources>

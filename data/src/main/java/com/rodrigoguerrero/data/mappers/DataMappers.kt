@@ -19,8 +19,8 @@ internal fun NoteEntity.mapToDto(): NoteDto {
         id = id,
         title = title,
         content = content,
-        modifiedTime = modifiedDate ?: 0,
-        createdTime = createdDate ?: 0,
+        modifiedTime = modifiedDate ?: "",
+        createdTime = createdDate ?: "",
         isPinned = isPinned ?: false
     )
 }

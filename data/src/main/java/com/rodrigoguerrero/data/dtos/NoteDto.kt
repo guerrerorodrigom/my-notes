@@ -4,7 +4,7 @@ data class NoteDto(
     val id: Int?,
     val title: String?,
     val content: String?,
-    val createdTime: Long,
-    val modifiedTime: Long,
+    val createdTime: String,
+    val modifiedTime: String,
     val isPinned: Boolean
 )
