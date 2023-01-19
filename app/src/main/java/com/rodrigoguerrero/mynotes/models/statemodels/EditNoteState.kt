@@ -1,17 +1,8 @@
 package com.rodrigoguerrero.mynotes.models.statemodels
 
-import android.content.Context
 import com.rodrigoguerrero.domain.models.NoteModel
-import com.rodrigoguerrero.mynotes.R
-import com.rodrigoguerrero.mynotes.utils.DateUtils.formatTimeUnitWithTwoDigits
-import com.rodrigoguerrero.mynotes.utils.DateUtils.isBeforeThisYear
-import com.rodrigoguerrero.mynotes.utils.DateUtils.isToday
-import com.rodrigoguerrero.mynotes.utils.DateUtils.isYesterday
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
-import kotlinx.datetime.toLocalDateTime
 
 sealed class EditNoteState {
     data class ContentState(
@@ -45,39 +36,6 @@ fun MutableStateFlow<EditNoteState>.updateWithNote(note: NoteModel) {
                 id = id
             )
         }
-    }
-}
-
-fun formatDate(date: String, context: Context): String {
-    return try {
-        val instant = Instant.parse(date)
-        with(instant.toLocalDateTime(currentSystemDefault())) {
-            return when {
-                isBeforeThisYear(date) -> context.getString(
-                    R.string.edited_more_than_a_year_ago,
-                    month.name.lowercase().replaceFirstChar { it.uppercase() }.substring(0, 3),
-                    dayOfMonth.toString(),
-                    year.toString()
-                )
-                isToday(date) -> context.getString(
-                    R.string.edited_today,
-                    time.hour.toString(),
-                    formatTimeUnitWithTwoDigits(time.minute)
-                )
-                isYesterday(date) -> context.getString(
-                    R.string.edited_yesterday,
-                    time.hour.toString(),
-                    formatTimeUnitWithTwoDigits(time.minute)
-                )
-                else -> context.getString(
-                    R.string.edited_month_day,
-                    month.name.lowercase().replaceFirstChar { it.uppercase() }.substring(0, 3),
-                    dayOfMonth.toString()
-                )
-            }
-        }
-    } catch (exception: Exception) {
-        ""
     }
 }
 

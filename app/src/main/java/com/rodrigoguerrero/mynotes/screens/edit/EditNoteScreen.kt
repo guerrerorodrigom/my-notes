@@ -1,5 +1,6 @@
 package com.rodrigoguerrero.mynotes.screens.edit
 
+import android.content.Context
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.imePadding
@@ -20,16 +21,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.components.EditNoteBottomBar
 import com.rodrigoguerrero.mynotes.components.EditNoteTopAppBar
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ContentState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ErrorState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.LoadingState
-import com.rodrigoguerrero.mynotes.models.statemodels.formatDate
 import com.rodrigoguerrero.mynotes.models.uimodels.EditNoteBottomSheet
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
+import com.rodrigoguerrero.mynotes.utils.DateUtils
 import com.rodrigoguerrero.mynotes.viewmodels.EditNoteViewModel
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -106,6 +111,39 @@ fun EditNoteScreen(
                 is ContentState -> EditNoteContent(currentState, padding, viewModel)
             }
         }
+    }
+}
+
+private fun formatDate(date: String, context: Context): String {
+    return try {
+        val instant = Instant.parse(date)
+        with(instant.toLocalDateTime(TimeZone.currentSystemDefault())) {
+            return when {
+                DateUtils.isBeforeThisYear(date) -> context.getString(
+                    R.string.edited_more_than_a_year_ago,
+                    month.name.lowercase().replaceFirstChar { it.uppercase() }.substring(0, 3),
+                    dayOfMonth.toString(),
+                    year.toString()
+                )
+                DateUtils.isToday(date) -> context.getString(
+                    R.string.edited_today,
+                    time.hour.toString(),
+                    DateUtils.formatTimeUnitWithTwoDigits(time.minute)
+                )
+                DateUtils.isYesterday(date) -> context.getString(
+                    R.string.edited_yesterday,
+                    time.hour.toString(),
+                    DateUtils.formatTimeUnitWithTwoDigits(time.minute)
+                )
+                else -> context.getString(
+                    R.string.edited_month_day,
+                    month.name.lowercase().replaceFirstChar { it.uppercase() }.substring(0, 3),
+                    dayOfMonth.toString()
+                )
+            }
+        }
+    } catch (exception: Exception) {
+        ""
     }
 }
 
