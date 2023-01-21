@@ -63,7 +63,7 @@ fun MutableStateFlow<EditNoteState>.updateContent(value: String) {
     }
 }
 
-fun MutableStateFlow<EditNoteState>.updateNoteColor(value: Color) {
+fun MutableStateFlow<EditNoteState>.updateNoteColor(value: Color?) {
     update {
         if (it is EditNoteState.ContentState) {
             it.copy(color = value)

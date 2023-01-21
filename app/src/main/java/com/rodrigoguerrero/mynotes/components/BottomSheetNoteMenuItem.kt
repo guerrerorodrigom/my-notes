@@ -25,7 +25,6 @@ fun BottomSheetNoteMenuItem(
 ) {
     Row(
         modifier = modifier
-            .background(color = MyNotesTheme.color.surface)
             .clickable { onClicked(noteOption) }
             .fillMaxWidth()
             .padding(all = MyNotesTheme.padding.m),

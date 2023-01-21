@@ -86,7 +86,7 @@ class EditNoteViewModel @Inject constructor(
         _state.updateContent(value)
     }
 
-    fun updateColor(color: Color) {
+    fun updateColor(color: Color?) {
         _state.updateNoteColor(color)
     }
 

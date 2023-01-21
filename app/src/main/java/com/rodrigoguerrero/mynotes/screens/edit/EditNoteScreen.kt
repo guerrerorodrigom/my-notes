@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.components.EditNoteBottomBar
 import com.rodrigoguerrero.mynotes.components.EditNoteTopAppBar
@@ -54,7 +55,7 @@ fun EditNoteScreen(
 ) {
     val state by viewModel.state.collectAsState()
     var bottomSheetType: EditNoteBottomSheet by remember { mutableStateOf(EditNoteBottomSheet.Colors) }
-
+    val systemUiController = rememberSystemUiController()
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     val bottomSheetState = rememberModalBottomSheetState(initialValue = Hidden)
@@ -68,6 +69,14 @@ fun EditNoteScreen(
         onBackClicked()
     }
 
+    val currentState = state
+    val backgroundColor = if (currentState is ContentState) {
+        currentState.color
+    } else {
+        null
+    }
+
+    systemUiController.setStatusBarColor(color = backgroundColor ?: MyNotesTheme.color.surface)
     ModalBottomSheetLayout(
         modifier = modifier.navigationBarsPadding(),
         sheetContent = {
@@ -76,19 +85,18 @@ fun EditNoteScreen(
                 onColorSelected = {
                     viewModel.updateColor(it)
                     coroutineScope.launch { bottomSheetState.hide() }
+                },
+                selectedColor = if (currentState is ContentState) {
+                    currentState.color
+                } else {
+                    null
                 }
             )
         },
         sheetState = bottomSheetState
     ) {
-        val currentState = state
-        val backgroundColor = if (currentState is ContentState) {
-            currentState.color ?: Color.Transparent
-        } else {
-            Color.Transparent
-        }
         Scaffold(
-            backgroundColor = backgroundColor,
+            backgroundColor = backgroundColor ?: Color.Transparent,
             modifier = Modifier.imePadding(),
             topBar = {
                 EditNoteTopAppBar(
@@ -99,7 +107,7 @@ fun EditNoteScreen(
                         onBackClicked()
                     },
                     onArchive = onArchive,
-                    backgroundColor = backgroundColor
+                    backgroundColor = backgroundColor ?: Color.Transparent
                 )
             },
             bottomBar = {
@@ -121,7 +129,7 @@ fun EditNoteScreen(
                     } else {
                         ""
                     },
-                    backgroundColor = backgroundColor
+                    backgroundColor = backgroundColor ?: Color.Transparent
                 )
             }
         ) { padding ->

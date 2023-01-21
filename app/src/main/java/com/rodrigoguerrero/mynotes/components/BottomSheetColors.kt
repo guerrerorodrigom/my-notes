@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -37,14 +37,14 @@ import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 @Composable
 fun BottomSheetColorSelector(
     modifier: Modifier = Modifier,
-    selectedColor: Color,
-    onColorSelected: (Color) -> Unit
+    selectedColor: Color?,
+    onColorSelected: (Color?) -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
-            .background(MyNotesTheme.color.surface)
+            .background(selectedColor ?: MyNotesTheme.color.surface)
             .padding(vertical = MyNotesTheme.padding.m)
     ) {
         Text(
@@ -61,19 +61,28 @@ fun BottomSheetColorSelector(
 
 @Composable
 private fun ColorSelectorRow(
-    selectedColor: Color,
-    onColorSelected: (Color) -> Unit
+    selectedColor: Color?,
+    onColorSelected: (Color?) -> Unit
 ) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = MyNotesTheme.padding.m),
         horizontalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.m)
     ) {
-        itemsIndexed(NoteColor.values()) { index, noteColor ->
+        item {
+            ColorSelector(
+                color = Color.Transparent,
+                isSelected = Color.Transparent == selectedColor,
+                onColorClicked = { onColorSelected(null) },
+                isEmpty = Color.Transparent != selectedColor
+            )
+        }
+
+        items(NoteColor.values()) { noteColor ->
             ColorSelector(
                 color = noteColor.color,
                 isSelected = noteColor.color == selectedColor,
                 onColorClicked = onColorSelected,
-                isEmpty = index == 0 && noteColor.color != selectedColor
+                isEmpty = false
             )
         }
     }

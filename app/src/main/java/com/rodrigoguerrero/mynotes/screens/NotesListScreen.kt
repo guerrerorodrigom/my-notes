@@ -17,8 +17,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rodrigoguerrero.mynotes.components.MainBottomBar
 import com.rodrigoguerrero.mynotes.components.NoteCard
 import com.rodrigoguerrero.mynotes.components.SearchField
@@ -37,7 +39,9 @@ fun NotesListScreen(
     onNoteSelected: (Int) -> Unit
 ) {
     var columns by remember { mutableStateOf(1) }
+    val systemUiController = rememberSystemUiController()
 
+    systemUiController.setStatusBarColor(color = MyNotesTheme.color.surface)
     Scaffold(
         topBar = {
             SearchField(

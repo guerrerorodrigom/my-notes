@@ -45,7 +45,6 @@ private fun BottomSheetMenu(
 ) {
     Column(
         modifier = modifier
-            .background(color = MyNotesTheme.color.surface)
             .fillMaxWidth()
             .padding(vertical = MyNotesTheme.padding.m)
     ) {
