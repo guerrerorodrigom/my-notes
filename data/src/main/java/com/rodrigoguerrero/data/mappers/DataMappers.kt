@@ -10,7 +10,8 @@ internal fun NoteDto.mapToEntity(): NoteEntity {
         content = content,
         createdDate = createdTime,
         modifiedDate = modifiedTime,
-        isPinned = isPinned
+        isPinned = isPinned,
+        color = color
     )
 }
 
@@ -21,6 +22,7 @@ internal fun NoteEntity.mapToDto(): NoteDto {
         content = content,
         modifiedTime = modifiedDate ?: "",
         createdTime = createdDate ?: "",
-        isPinned = isPinned ?: false
+        isPinned = isPinned ?: false,
+        color = color
     )
 }

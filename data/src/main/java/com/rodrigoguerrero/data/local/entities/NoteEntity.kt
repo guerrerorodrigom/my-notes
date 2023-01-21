@@ -11,6 +11,6 @@ internal data class NoteEntity(
     val content: String? = null,
     @ColumnInfo(name = "created_date") val createdDate: String? = null,
     @ColumnInfo(name = "modified_date") val modifiedDate: String? = null,
-    val color: Int? = null,
+    val color: Long? = null,
     val isPinned: Boolean? = null
 )

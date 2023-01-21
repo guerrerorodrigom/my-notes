@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
@@ -17,8 +18,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rodrigoguerrero.mynotes.R
@@ -31,12 +36,13 @@ import com.rodrigoguerrero.mynotes.models.uimodels.EditNoteBottomSheet
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 import com.rodrigoguerrero.mynotes.utils.DateUtils
 import com.rodrigoguerrero.mynotes.viewmodels.EditNoteViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun EditNoteScreen(
     modifier: Modifier = Modifier,
@@ -50,6 +56,7 @@ fun EditNoteScreen(
     var bottomSheetType: EditNoteBottomSheet by remember { mutableStateOf(EditNoteBottomSheet.Colors) }
 
     val coroutineScope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
     val bottomSheetState = rememberModalBottomSheetState(initialValue = Hidden)
 
     BackHandler(bottomSheetState.isVisible) {
@@ -64,12 +71,24 @@ fun EditNoteScreen(
     ModalBottomSheetLayout(
         modifier = modifier.navigationBarsPadding(),
         sheetContent = {
-            EditNoteBottomSheetSelection(bottomSheetType)
+            EditNoteBottomSheetSelection(
+                bottomSheetType = bottomSheetType,
+                onColorSelected = {
+                    viewModel.updateColor(it)
+                    coroutineScope.launch { bottomSheetState.hide() }
+                }
+            )
         },
         sheetState = bottomSheetState
     ) {
         val currentState = state
+        val backgroundColor = if (currentState is ContentState) {
+            currentState.color ?: Color.Transparent
+        } else {
+            Color.Transparent
+        }
         Scaffold(
+            backgroundColor = backgroundColor,
             modifier = Modifier.imePadding(),
             topBar = {
                 EditNoteTopAppBar(
@@ -79,28 +98,30 @@ fun EditNoteScreen(
                         viewModel.saveNote()
                         onBackClicked()
                     },
-                    onArchive = onArchive
+                    onArchive = onArchive,
+                    backgroundColor = backgroundColor
                 )
             },
             bottomBar = {
                 EditNoteBottomBar(
                     onShowOptions = {
                         bottomSheetType = EditNoteBottomSheet.Options
-                        coroutineScope.launch { bottomSheetState.show() }
+                        showBottomSheet(coroutineScope, bottomSheetState, keyboardController)
                     },
                     onShowColors = {
                         bottomSheetType = EditNoteBottomSheet.Colors
-                        coroutineScope.launch { bottomSheetState.show() }
+                        showBottomSheet(coroutineScope, bottomSheetState, keyboardController)
                     },
                     onShowMenu = {
                         bottomSheetType = EditNoteBottomSheet.More
-                        coroutineScope.launch { bottomSheetState.show() }
+                        showBottomSheet(coroutineScope, bottomSheetState, keyboardController)
                     },
                     time = if (currentState is ContentState) {
                         formatDate(currentState.editedDate, LocalContext.current)
                     } else {
                         ""
-                    }
+                    },
+                    backgroundColor = backgroundColor
                 )
             }
         ) { padding ->
@@ -108,9 +129,25 @@ fun EditNoteScreen(
             when (currentState) {
                 LoadingState -> {}
                 ErrorState -> {}
-                is ContentState -> EditNoteContent(currentState, padding, viewModel)
+                is ContentState -> EditNoteContent(
+                    currentState = currentState,
+                    padding = padding,
+                    viewModel = viewModel
+                )
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+private fun showBottomSheet(
+    coroutineScope: CoroutineScope,
+    bottomSheetState: ModalBottomSheetState,
+    keyboardController: SoftwareKeyboardController?
+) {
+    coroutineScope.launch {
+        keyboardController?.hide()
+        bottomSheetState.show()
     }
 }
 

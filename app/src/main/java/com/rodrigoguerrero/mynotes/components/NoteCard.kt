@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,10 @@ fun NoteCard(
         shape = MyNotesTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(id = R.dimen.card_elevation)
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = note.color?.let { Color(it) }
+                ?: MyNotesTheme.color.surfaceVariant
         )
     ) {
         Column(
@@ -67,6 +72,13 @@ fun NoteCard(
 @Composable
 private fun PreviewNoteCard() {
     MyNotesTheme {
-        NoteCard(note = Note(title = "Note title", content = "Note content", id = 1)) { }
+        NoteCard(
+            note = Note(
+                title = "Note title",
+                content = "Note content",
+                id = 1,
+                color = Color.Blue.value
+            )
+        ) { }
     }
 }

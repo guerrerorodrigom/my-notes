@@ -32,6 +32,7 @@ import com.rodrigoguerrero.mynotes.viewmodels.EditNoteViewModel
 
 @Composable
 fun EditNoteContent(
+    modifier: Modifier = Modifier,
     currentState: EditNoteState.ContentState,
     padding: PaddingValues,
     viewModel: EditNoteViewModel
@@ -54,8 +55,7 @@ fun EditNoteContent(
     }
 
     Column(
-        modifier = Modifier
-            .background(color = MyNotesTheme.color.background)
+        modifier = modifier
             .fillMaxSize()
             .padding(padding)
     ) {
@@ -78,7 +78,7 @@ fun EditNoteContent(
                 disabledBorderColor = Color.Transparent,
                 errorBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                backgroundColor = MyNotesTheme.color.surface,
+                backgroundColor = currentState.color ?: Color.Transparent,
                 textColor = MyNotesTheme.color.onSurface,
                 cursorColor = MyNotesTheme.color.onSurface
             )
@@ -105,7 +105,7 @@ fun EditNoteContent(
                 disabledBorderColor = Color.Transparent,
                 errorBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                backgroundColor = MyNotesTheme.color.surface,
+                backgroundColor = currentState.color ?: Color.Transparent,
                 textColor = MyNotesTheme.color.onSurface,
                 cursorColor = MyNotesTheme.color.onSurface
             )

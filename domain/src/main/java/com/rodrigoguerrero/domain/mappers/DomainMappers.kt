@@ -15,7 +15,8 @@ internal fun NoteModel.mapToDto(
         title = title,
         createdTime = createdTime ?: currentTime.toString(),
         modifiedTime = modifiedTime ?: currentTime.toString(),
-        isPinned = isPinned
+        isPinned = isPinned,
+        color = color?.toLong()
     )
 }
 
@@ -26,6 +27,7 @@ internal fun NoteDto.mapToDomain(): NoteModel {
         title = title,
         created = createdTime,
         isPinned = isPinned,
-        modified = modifiedTime
+        modified = modifiedTime,
+        color = color?.toULong()
     )
 }

@@ -6,5 +6,6 @@ data class NoteDto(
     val content: String?,
     val createdTime: String,
     val modifiedTime: String,
-    val isPinned: Boolean
+    val isPinned: Boolean,
+    val color: Long?
 )

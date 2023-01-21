@@ -24,7 +24,8 @@ class CreateNewNoteUseCase @Inject constructor(
                 id = null,
                 content = null,
                 title = null,
-                isPinned = false
+                isPinned = false,
+                color = null
             )
         )
 

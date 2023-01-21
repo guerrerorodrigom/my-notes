@@ -8,10 +8,13 @@ import com.rodrigoguerrero.mynotes.components.BottomSheetNoteMoreMenu
 import com.rodrigoguerrero.mynotes.models.uimodels.EditNoteBottomSheet
 
 @Composable
-fun EditNoteBottomSheetSelection(bottomSheetType: EditNoteBottomSheet) {
+fun EditNoteBottomSheetSelection(
+    bottomSheetType: EditNoteBottomSheet,
+    onColorSelected: (Color) -> Unit
+) {
     when (bottomSheetType) {
         EditNoteBottomSheet.Colors -> BottomSheetColorSelector(
-            onColorSelected = { },
+            onColorSelected = onColorSelected,
             selectedColor = Color.Transparent
         )
         EditNoteBottomSheet.More -> BottomSheetNoteMoreMenu(

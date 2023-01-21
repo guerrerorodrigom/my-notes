@@ -1,5 +1,6 @@
 package com.rodrigoguerrero.mynotes.viewmodels
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ContentState
 import com.rodrigoguerrero.mynotes.models.statemodels.toDomainModel
 import com.rodrigoguerrero.mynotes.models.statemodels.updateContent
+import com.rodrigoguerrero.mynotes.models.statemodels.updateNoteColor
 import com.rodrigoguerrero.mynotes.models.statemodels.updateTitle
 import com.rodrigoguerrero.mynotes.models.statemodels.updateWithNote
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +49,6 @@ class EditNoteViewModel @Inject constructor(
         viewModelScope.launch {
             _state
                 .filterIsInstance<ContentState>()
-                .map { it.title to it.content }
                 .distinctUntilChanged()
                 .debounce(500)
                 .collectLatest {
@@ -83,6 +84,10 @@ class EditNoteViewModel @Inject constructor(
 
     fun updateContent(value: String) {
         _state.updateContent(value)
+    }
+
+    fun updateColor(color: Color) {
+        _state.updateNoteColor(color)
     }
 
     fun saveNote() {

@@ -1,5 +1,6 @@
 package com.rodrigoguerrero.mynotes.models.statemodels
 
+import androidx.compose.ui.graphics.Color
 import com.rodrigoguerrero.domain.models.NoteModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -10,7 +11,8 @@ sealed class EditNoteState {
         val content: String,
         val editedDate: String,
         val createdDate: String,
-        val id: Int
+        val id: Int,
+        val color: Color?
     ) : EditNoteState()
 
     object LoadingState : EditNoteState()
@@ -22,7 +24,8 @@ fun EditNoteState.ContentState.toDomainModel() = NoteModel(
     title = title,
     content = content,
     modified = editedDate,
-    created = createdDate
+    created = createdDate,
+    color = color?.value
 )
 
 fun MutableStateFlow<EditNoteState>.updateWithNote(note: NoteModel) {
@@ -33,7 +36,8 @@ fun MutableStateFlow<EditNoteState>.updateWithNote(note: NoteModel) {
                 content = content.orEmpty(),
                 editedDate = modified,
                 createdDate = created,
-                id = id
+                id = id,
+                color = color?.let { Color(it) }
             )
         }
     }
@@ -53,6 +57,16 @@ fun MutableStateFlow<EditNoteState>.updateContent(value: String) {
     update {
         if (it is EditNoteState.ContentState) {
             it.copy(content = value)
+        } else {
+            it
+        }
+    }
+}
+
+fun MutableStateFlow<EditNoteState>.updateNoteColor(value: Color) {
+    update {
+        if (it is EditNoteState.ContentState) {
+            it.copy(color = value)
         } else {
             it
         }
