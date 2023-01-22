@@ -2,6 +2,7 @@ package com.rodrigoguerrero.data.repositories
 
 import com.rodrigoguerrero.data.dtos.NoteDto
 import com.rodrigoguerrero.data.local.daos.NotesDao
+import com.rodrigoguerrero.data.local.datasources.NotesDataSource
 import com.rodrigoguerrero.data.mappers.mapToDto
 import com.rodrigoguerrero.data.mappers.mapToEntity
 import javax.inject.Inject
@@ -9,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class NotesRepositoryImpl @Inject constructor(
-    private val notesDao: NotesDao
+    private val notesDataSource: NotesDataSource
 ) : NotesRepository {
     override suspend fun addNote(note: NoteDto): Int {
-        val id = notesDao.insert(note.mapToEntity())
+        val id = notesDataSource.insertNote(note.mapToEntity())
 
         return if (id >= 0) {
             id.toInt()
@@ -22,20 +23,26 @@ internal class NotesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateNote(note: NoteDto) {
-        notesDao.update(note.mapToEntity())
+        notesDataSource.update(note.mapToEntity())
     }
 
     override suspend fun getAllNotes(): Flow<List<NoteDto>> {
-        return notesDao.getAllNotes().map { notes ->
+        return notesDataSource.getAllNotes().map { notes ->
+            notes.map { note -> note.mapToDto() }
+        }
+    }
+
+    override suspend fun getPinnedNotes(): Flow<List<NoteDto>> {
+        return notesDataSource.getPinnedNotes().map { notes ->
             notes.map { note -> note.mapToDto() }
         }
     }
 
     override suspend fun getNote(id: Int): NoteDto {
-        return notesDao.getNote(id).mapToDto()
+        return notesDataSource.getNote(id).mapToDto()
     }
 
     override suspend fun deleteNote(id: Int) {
-        notesDao.delete(id)
+        notesDataSource.delete(id)
     }
 }

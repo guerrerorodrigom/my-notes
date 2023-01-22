@@ -5,9 +5,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -63,6 +68,15 @@ fun NoteCard(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+
+            if (note.isPinned) {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    Icon(
+                        imageVector = Icons.Filled.PushPin,
+                        contentDescription = null,
+                    )
+                }
+            }
         }
     }
 }
@@ -77,7 +91,8 @@ private fun PreviewNoteCard() {
                 title = "Note title",
                 content = "Note content",
                 id = 1,
-                color = Color.Blue.value
+                color = Color.Blue.value,
+                isPinned = true
             )
         ) { }
     }

@@ -12,7 +12,8 @@ sealed class EditNoteState {
         val editedDate: String,
         val createdDate: String,
         val id: Int,
-        val color: Color?
+        val color: Color?,
+        val isPinned: Boolean
     ) : EditNoteState()
 
     object LoadingState : EditNoteState()
@@ -25,7 +26,8 @@ fun EditNoteState.ContentState.toDomainModel() = NoteModel(
     content = content,
     modified = editedDate,
     created = createdDate,
-    color = color?.value
+    color = color?.value,
+    isPinned = isPinned
 )
 
 fun MutableStateFlow<EditNoteState>.updateWithNote(note: NoteModel) {
@@ -37,7 +39,8 @@ fun MutableStateFlow<EditNoteState>.updateWithNote(note: NoteModel) {
                 editedDate = modified,
                 createdDate = created,
                 id = id,
-                color = color?.let { Color(it) }
+                color = color?.let { Color(it) },
+                isPinned = isPinned
             )
         }
     }
@@ -67,6 +70,16 @@ fun MutableStateFlow<EditNoteState>.updateNoteColor(value: Color?) {
     update {
         if (it is EditNoteState.ContentState) {
             it.copy(color = value)
+        } else {
+            it
+        }
+    }
+}
+
+fun MutableStateFlow<EditNoteState>.toggleIsPinned() {
+    update {
+        if (it is EditNoteState.ContentState) {
+            it.copy(isPinned = !it.isPinned)
         } else {
             it
         }

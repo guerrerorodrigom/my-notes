@@ -37,7 +37,7 @@ class NotesListViewModel @Inject constructor(
             retrieveAllNotesUseCase().collectLatest { notes ->
                 _state.update { state ->
                     state.copy(
-                        notes = notes.map { Note(it.id, it.title, it.content, it.color) },
+                        notes = notes.map { Note(it.id, it.title, it.content, it.color, it.isPinned) },
                         isLoading = false
                     )
                 }

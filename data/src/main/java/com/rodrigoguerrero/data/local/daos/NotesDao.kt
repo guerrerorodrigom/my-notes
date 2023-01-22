@@ -12,8 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 internal interface NotesDao {
 
-    @Query("SELECT * FROM notes ORDER BY modified_date DESC")
+    @Query("SELECT * FROM notes WHERE isPinned = 0 ORDER BY modified_date DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM notes WHERE isPinned = 1 ORDER BY modified_date DESC")
+    fun getPinnedNotes(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE id = :id")
     suspend fun getNote(id: Int): NoteEntity

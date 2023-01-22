@@ -12,6 +12,7 @@ import com.rodrigoguerrero.domain.usecases.RetrieveNoteUseCase
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ContentState
 import com.rodrigoguerrero.mynotes.models.statemodels.toDomainModel
+import com.rodrigoguerrero.mynotes.models.statemodels.toggleIsPinned
 import com.rodrigoguerrero.mynotes.models.statemodels.updateContent
 import com.rodrigoguerrero.mynotes.models.statemodels.updateNoteColor
 import com.rodrigoguerrero.mynotes.models.statemodels.updateTitle
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
@@ -88,6 +90,10 @@ class EditNoteViewModel @Inject constructor(
 
     fun updateColor(color: Color?) {
         _state.updateNoteColor(color)
+    }
+
+    fun toggleIsPinned() {
+        _state.toggleIsPinned()
     }
 
     fun saveNote() {

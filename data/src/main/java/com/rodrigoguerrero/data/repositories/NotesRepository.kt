@@ -11,6 +11,8 @@ interface NotesRepository {
 
     suspend fun getAllNotes(): Flow<List<NoteDto>>
 
+    suspend fun getPinnedNotes(): Flow<List<NoteDto>>
+
     suspend fun getNote(id: Int): NoteDto
 
     suspend fun deleteNote(id: Int)

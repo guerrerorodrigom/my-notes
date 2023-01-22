@@ -49,7 +49,6 @@ fun EditNoteScreen(
     modifier: Modifier = Modifier,
     viewModel: EditNoteViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
-    onPinClicked: () -> Unit,
     onAddReminder: () -> Unit,
     onArchive: () -> Unit
 ) {
@@ -101,13 +100,14 @@ fun EditNoteScreen(
             topBar = {
                 EditNoteTopAppBar(
                     onAddReminder = onAddReminder,
-                    onPinClicked = onPinClicked,
+                    onPinClicked = viewModel::toggleIsPinned,
                     onBackClicked = {
                         viewModel.saveNote()
                         onBackClicked()
                     },
                     onArchive = onArchive,
-                    backgroundColor = backgroundColor ?: Color.Transparent
+                    backgroundColor = backgroundColor ?: Color.Transparent,
+                    isPinned = (state as? ContentState)?.isPinned ?: false
                 )
             },
             bottomBar = {
@@ -200,8 +200,7 @@ private fun PreviewEditNoteScreen() {
         EditNoteScreen(
             onArchive = { },
             onBackClicked = { },
-            onAddReminder = { },
-            onPinClicked = { }
+            onAddReminder = { }
         )
     }
 }

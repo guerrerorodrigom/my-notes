@@ -39,7 +39,6 @@ class MainActivity : ComponentActivity() {
                     composable(route = Destinations.NEW_NOTE.route) {
                         EditNoteScreen(
                             onBackClicked = { navController.popBackStack() },
-                            onPinClicked = { },
                             onAddReminder = { },
                             onArchive = { }
                         )
@@ -52,7 +51,6 @@ class MainActivity : ComponentActivity() {
                     ) {
                         EditNoteScreen(
                             onBackClicked = { navController.popBackStack() },
-                            onPinClicked = { },
                             onAddReminder = { },
                             onArchive = { }
                         )

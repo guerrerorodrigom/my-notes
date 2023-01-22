@@ -3,6 +3,7 @@ package com.rodrigoguerrero.mynotes.components
 import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.outlined.AddAlert
 import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.PushPin
@@ -22,6 +23,7 @@ import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 fun EditNoteTopAppBar(
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.Transparent,
+    isPinned: Boolean,
     onBackClicked: () -> Unit,
     onPinClicked: () -> Unit,
     onAddReminder: () -> Unit,
@@ -40,7 +42,14 @@ fun EditNoteTopAppBar(
         },
         actions = {
             IconButton(onClick = onPinClicked) {
-                Icon(imageVector = Icons.Outlined.PushPin, contentDescription = null)
+                Icon(
+                    imageVector = if (isPinned) {
+                        Icons.Filled.PushPin
+                    } else {
+                        Icons.Outlined.PushPin
+                    },
+                    contentDescription = null
+                )
             }
             IconButton(onClick = onAddReminder) {
                 Icon(imageVector = Icons.Outlined.AddAlert, contentDescription = null)
@@ -62,7 +71,8 @@ private fun PreviewEditNoteTopeAppBar() {
             onArchive = { },
             onBackClicked = { },
             onAddReminder = { },
-            onPinClicked = { }
+            onPinClicked = { },
+            isPinned = true
         )
     }
 }

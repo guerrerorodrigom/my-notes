@@ -42,7 +42,11 @@ fun NotesListScreen(
         topBar = {
             SearchField(
                 onMenuClicked = onMenuClicked,
-                modifier = Modifier.padding(horizontal = MyNotesTheme.padding.m),
+                modifier = Modifier.padding(
+                    start = MyNotesTheme.padding.m,
+                    end = MyNotesTheme.padding.m,
+                    bottom = MyNotesTheme.padding.m
+                ),
                 onModeChanged = viewModel::toggleListMode,
                 listMode = state.listMode
             )
@@ -68,7 +72,11 @@ fun NotesListScreen(
             else -> {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(
-                        if (state.listMode == ListMode.LIST) { 1 } else { 2 }
+                        if (state.listMode == ListMode.LIST) {
+                            1
+                        } else {
+                            2
+                        }
                     ),
                     modifier = Modifier
                         .fillMaxSize()
