@@ -6,6 +6,7 @@ object Android {
         const val composeFoundation = "1.3.1"
         const val composeNavigation = "2.5.3"
         const val coreKtx = "1.9.0"
+        const val dataStore = "1.0.0"
         const val hilt = "2.44"
         const val hiltNavigationCompose = "1.0.0"
         const val icons = "1.3.1"
@@ -42,6 +43,7 @@ object Android {
     }
 
     object Jetpack {
+        const val dataStore = "androidx.datastore:datastore-preferences:${Versions.dataStore}"
         const val room = "androidx.room:room-runtime:${Versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
         const val roomKtx = "androidx.room:room-ktx:${Versions.room}"

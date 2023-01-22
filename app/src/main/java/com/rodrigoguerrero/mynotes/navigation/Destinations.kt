@@ -13,9 +13,5 @@ enum class MainScreenDestinations(val route: String) {
     ARCHIVE("archive"),
     DELETED("deleted"),
     SETTINGS("settings"),
-    HELP("help");
-
-    companion object {
-        infix fun from(route: String): MainScreenDestinations? = values().firstOrNull { it.route == route }
-    }
+    HELP("help")
 }

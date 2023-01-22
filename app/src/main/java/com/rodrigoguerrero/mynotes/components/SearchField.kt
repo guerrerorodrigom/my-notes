@@ -31,11 +31,11 @@ import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 @Composable
 fun SearchField(
     modifier: Modifier = Modifier,
+    listMode: ListMode,
     onMenuClicked: () -> Unit,
-    onModeChanged: (ListMode) -> Unit
+    onModeChanged: () -> Unit
 ) {
     var value by remember { mutableStateOf("") }
-    var listMode by remember { mutableStateOf(ListMode.LIST) }
 
     TextField(
         value = value,
@@ -51,16 +51,7 @@ fun SearchField(
         },
         shape = MyNotesTheme.shapes.extraLarge,
         trailingIcon = {
-            IconButton(
-                onClick = {
-                    listMode = if (listMode == ListMode.LIST) {
-                        ListMode.GRID
-                    } else {
-                        ListMode.LIST
-                    }
-                    onModeChanged(listMode)
-                }
-            ) {
+            IconButton(onClick = onModeChanged) {
                 Icon(
                     imageVector = if (listMode == ListMode.LIST) {
                         Icons.Default.GridView
@@ -85,7 +76,7 @@ fun SearchField(
 private fun PreviewSearchField() {
     MyNotesTheme {
         Surface(modifier = Modifier.padding(MyNotesTheme.padding.s)) {
-            SearchField(onMenuClicked = { }) { }
+            SearchField(onMenuClicked = { }, listMode = ListMode.LIST) { }
         }
     }
 }

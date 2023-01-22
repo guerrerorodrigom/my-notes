@@ -13,11 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -38,7 +34,7 @@ fun NotesListScreen(
     onMenuClicked: () -> Unit,
     onNoteSelected: (Int) -> Unit
 ) {
-    var columns by remember { mutableStateOf(1) }
+    val state by viewModel.state.collectAsState()
     val systemUiController = rememberSystemUiController()
 
     systemUiController.setStatusBarColor(color = MyNotesTheme.color.surface)
@@ -47,13 +43,8 @@ fun NotesListScreen(
             SearchField(
                 onMenuClicked = onMenuClicked,
                 modifier = Modifier.padding(horizontal = MyNotesTheme.padding.m),
-                onModeChanged = { mode ->
-                    columns = if (mode == ListMode.LIST) {
-                        1
-                    } else {
-                        2
-                    }
-                }
+                onModeChanged = viewModel::toggleListMode,
+                listMode = state.listMode
             )
         },
         bottomBar = {
@@ -68,8 +59,6 @@ fun NotesListScreen(
         backgroundColor = MyNotesTheme.color.background
     ) { padding ->
 
-        val state by viewModel.state.collectAsState()
-
         LaunchedEffect(key1 = Unit) {
             viewModel.loadNotes()
         }
@@ -78,7 +67,9 @@ fun NotesListScreen(
             state.notes.isEmpty() -> EmptyNotes(modifier = modifier.padding(padding))
             else -> {
                 LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(columns),
+                    columns = StaggeredGridCells.Fixed(
+                        if (state.listMode == ListMode.LIST) { 1 } else { 2 }
+                    ),
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding),

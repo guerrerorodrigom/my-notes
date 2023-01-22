@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rodrigoguerrero.domain.usecases.RetrieveAllNotesUseCase
 import com.rodrigoguerrero.mynotes.models.statemodels.NotesListState
 import com.rodrigoguerrero.mynotes.models.uimodels.Note
+import com.rodrigoguerrero.mynotes.settings.AppSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -16,11 +17,20 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class NotesListViewModel @Inject constructor(
-    private val retrieveAllNotesUseCase: RetrieveAllNotesUseCase
+    private val retrieveAllNotesUseCase: RetrieveAllNotesUseCase,
+    private val appSettings: AppSettings
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NotesListState())
     val state: StateFlow<NotesListState> = _state
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettings.listMode.collectLatest { listMode ->
+                _state.update { state -> state.copy(listMode = listMode) }
+            }
+        }
+    }
 
     fun loadNotes() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,6 +42,12 @@ class NotesListViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun toggleListMode() {
+        viewModelScope.launch(Dispatchers.IO) {
+            appSettings.toggleListType()
         }
     }
 }
