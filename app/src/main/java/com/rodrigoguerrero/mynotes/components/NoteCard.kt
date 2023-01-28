@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -90,7 +91,7 @@ fun NoteCard(
                     Icon(
                         imageVector = Icons.Filled.PushPin,
                         contentDescription = null,
-                        modifier = Modifier.size(dimensionResource(id = R.dimen.card_pinned_icon_size))
+                        modifier = Modifier.size(dimensionResource(id = R.dimen.card_pinned_icon_size)).rotate(45f)
                     )
                 }
             }
