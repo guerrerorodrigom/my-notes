@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rodrigoguerrero.domain.usecases.RetrieveAllNotesUseCase
 import com.rodrigoguerrero.mynotes.models.statemodels.NotesListState
-import com.rodrigoguerrero.mynotes.models.uimodels.Note
+import com.rodrigoguerrero.mynotes.models.statemodels.updateListMode
+import com.rodrigoguerrero.mynotes.models.statemodels.updateSelectNote
+import com.rodrigoguerrero.mynotes.models.statemodels.updateUnselectAll
+import com.rodrigoguerrero.mynotes.models.statemodels.updateWithNotes
 import com.rodrigoguerrero.mynotes.settings.AppSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -12,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -27,7 +29,7 @@ class NotesListViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             appSettings.listMode.collectLatest { listMode ->
-                _state.update { state -> state.copy(listMode = listMode) }
+                _state.updateListMode(listMode)
             }
         }
     }
@@ -35,14 +37,7 @@ class NotesListViewModel @Inject constructor(
     fun loadNotes() {
         viewModelScope.launch(Dispatchers.IO) {
             retrieveAllNotesUseCase().collectLatest { notes ->
-                _state.update { state ->
-                    state.copy(
-                        notes = notes.map {
-                            Note(it.id, it.title, it.content, it.color, it.isPinned)
-                        },
-                        isLoading = false
-                    )
-                }
+                _state.updateWithNotes(notes)
             }
         }
     }
@@ -54,25 +49,10 @@ class NotesListViewModel @Inject constructor(
     }
 
     fun closeEditBar() {
-        _state.update { state ->
-            val updatedNotes = state.notes.map { it.copy(isSelected = false) }
-            state.copy(isMultipleSelectionEnabled = false, notes = updatedNotes)
-        }
+        _state.updateUnselectAll()
     }
 
     fun toggleNoteSelected(id: Int) {
-        _state.update { state ->
-            val updatedNotes = state.notes.map {
-                if (it.id == id) {
-                    it.copy(isSelected = !it.isSelected)
-                } else {
-                    it
-                }
-            }
-            state.copy(
-                notes = updatedNotes,
-                isMultipleSelectionEnabled = updatedNotes.any { it.isSelected },
-            )
-        }
+        _state.updateSelectNote(id)
     }
 }
