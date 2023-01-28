@@ -40,4 +40,9 @@
     <string name="edited_today">%1$s:%2$s</string>
     <string name="edited_yesterday">yesterday, %1$s:%2$s</string>
     <string name="edited_month_day">%1$s %2$s</string>
+
+    <string name="selected_note_menu_archive">Archive</string>
+    <string name="selected_note_menu_delete">Delete</string>
+    <string name="selected_note_menu_copy">Make a copy</string>
+    <string name="selected_note_menu_send">Send</string>
 </resources>

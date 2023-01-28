@@ -1,6 +1,7 @@
 package com.rodrigoguerrero.mynotes.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -14,6 +15,10 @@ import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +30,7 @@ fun EditTopBar(
     modifier: Modifier = Modifier,
     onClose: () -> Unit
 ) {
+    var isMenuExpanded by remember { mutableStateOf(false) }
     TopAppBar(
         backgroundColor = MyNotesTheme.color.surfaceVariant,
         modifier = modifier
@@ -64,10 +70,16 @@ fun EditTopBar(
                     contentDescription = null
                 )
             }
-            IconButton(onClick = { }) {
-                Icon(
-                    imageVector = Icons.Outlined.MoreVert,
-                    contentDescription = null
+            Box {
+                IconButton(onClick = { isMenuExpanded = true }) {
+                    Icon(
+                        imageVector = Icons.Outlined.MoreVert,
+                        contentDescription = null
+                    )
+                }
+                EditBarMenu(
+                    isExpanded = isMenuExpanded,
+                    onDismissRequest = { isMenuExpanded = false }
                 )
             }
         },
@@ -76,6 +88,7 @@ fun EditTopBar(
 }
 
 @Preview(name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(showBackground = true)
 @Composable
 private fun PreviewEditTopBar() {
     MyNotesTheme {
