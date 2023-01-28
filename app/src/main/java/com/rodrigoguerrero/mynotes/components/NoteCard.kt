@@ -1,7 +1,9 @@
 package com.rodrigoguerrero.mynotes.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,19 +27,24 @@ import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.models.uimodels.Note
 import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NoteCard(
     modifier: Modifier = Modifier,
     note: Note,
-    onSelected: (Int) -> Unit
+    onCardSelected: (Int) -> Unit,
+    onLongPress: (Int) -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
     Card(
-        modifier = modifier.clickable(
-            indication = null,
-            interactionSource = interactionSource
-        ) { onSelected(note.id) },
+        modifier = modifier
+            .combinedClickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = { onCardSelected(note.id) },
+                onLongClick = { onLongPress(note.id) }
+            ),
         shape = MyNotesTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(id = R.dimen.card_elevation)
@@ -45,7 +52,15 @@ fun NoteCard(
         colors = CardDefaults.cardColors(
             containerColor = note.color?.let { Color(it) }
                 ?: MyNotesTheme.color.surfaceVariant
-        )
+        ),
+        border = if (note.isSelected) {
+            BorderStroke(
+                width = dimensionResource(id = R.dimen.card_border_width),
+                color = MyNotesTheme.color.onSurfaceVariant
+            )
+        } else {
+            null
+        }
     ) {
         Column(
             modifier = Modifier.padding(MyNotesTheme.padding.m),
@@ -93,7 +108,9 @@ private fun PreviewNoteCard() {
                 id = 1,
                 color = Color.Blue.value,
                 isPinned = true
-            )
-        ) { }
+            ),
+            onCardSelected = { },
+            onLongPress = { }
+        )
     }
 }

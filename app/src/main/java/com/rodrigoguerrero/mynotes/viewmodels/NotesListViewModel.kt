@@ -37,7 +37,9 @@ class NotesListViewModel @Inject constructor(
             retrieveAllNotesUseCase().collectLatest { notes ->
                 _state.update { state ->
                     state.copy(
-                        notes = notes.map { Note(it.id, it.title, it.content, it.color, it.isPinned) },
+                        notes = notes.map {
+                            Note(it.id, it.title, it.content, it.color, it.isPinned)
+                        },
                         isLoading = false
                     )
                 }
@@ -48,6 +50,29 @@ class NotesListViewModel @Inject constructor(
     fun toggleListMode() {
         viewModelScope.launch(Dispatchers.IO) {
             appSettings.toggleListType()
+        }
+    }
+
+    fun closeEditBar() {
+        _state.update { state ->
+            val updatedNotes = state.notes.map { it.copy(isSelected = false) }
+            state.copy(isMultipleSelectionEnabled = false, notes = updatedNotes)
+        }
+    }
+
+    fun toggleNoteSelected(id: Int) {
+        _state.update { state ->
+            val updatedNotes = state.notes.map {
+                if (it.id == id) {
+                    it.copy(isSelected = !it.isSelected)
+                } else {
+                    it
+                }
+            }
+            state.copy(
+                notes = updatedNotes,
+                isMultipleSelectionEnabled = updatedNotes.any { it.isSelected },
+            )
         }
     }
 }

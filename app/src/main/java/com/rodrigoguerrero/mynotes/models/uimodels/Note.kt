@@ -5,5 +5,6 @@ data class Note(
     val title: String?,
     val content: String?,
     val color: ULong?,
-    val isPinned: Boolean
+    val isPinned: Boolean,
+    val isSelected: Boolean = false
 )

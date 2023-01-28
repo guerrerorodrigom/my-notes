@@ -6,5 +6,6 @@ import com.rodrigoguerrero.mynotes.models.uimodels.Note
 data class NotesListState(
     val notes: List<Note> = emptyList(),
     val isLoading: Boolean = true,
-    val listMode: ListMode = ListMode.LIST
+    val listMode: ListMode = ListMode.LIST,
+    val isMultipleSelectionEnabled: Boolean = false
 )
