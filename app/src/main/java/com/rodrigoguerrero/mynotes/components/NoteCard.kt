@@ -52,8 +52,7 @@ fun NoteCard(
             defaultElevation = dimensionResource(id = R.dimen.card_elevation)
         ),
         colors = CardDefaults.cardColors(
-            containerColor = note.color?.let { Color(it) }
-                ?: MyNotesTheme.color.surfaceVariant
+            containerColor = note.color ?: MyNotesTheme.color.surfaceVariant
         ),
         border = if (note.isSelected) {
             BorderStroke(
@@ -109,8 +108,10 @@ private fun PreviewNoteCard() {
                 title = "Note title",
                 content = "Note content",
                 id = 1,
-                color = Color.Blue.value,
-                isPinned = true
+                color = Color.Blue,
+                isPinned = true,
+                createdDate = "Jan 30",
+                editedDate = "Jan 30"
             ),
             onCardSelected = { },
             onLongPress = { }

@@ -60,7 +60,11 @@ fun NotesListScreen(
         topBar = {
             if (state.isMultipleSelectionEnabled) {
                 systemUiController.setStatusBarColor(color = MyNotesTheme.color.surfaceVariant)
-                EditTopBar(onClose = viewModel::closeEditBar)
+                EditTopBar(
+                    onClose = viewModel::closeEditBar,
+                    updatePinnedNotes = viewModel::updatePinnedNotes,
+                    isPinned = state.isPinned
+                )
             } else {
                 systemUiController.setStatusBarColor(color = MyNotesTheme.color.surface)
                 SearchField(
@@ -86,10 +90,6 @@ fun NotesListScreen(
         },
         backgroundColor = MyNotesTheme.color.background
     ) { padding ->
-
-        LaunchedEffect(key1 = Unit) {
-            viewModel.loadNotes()
-        }
 
         when {
             state.notes.isEmpty() -> EmptyNotes(modifier = modifier.padding(padding))

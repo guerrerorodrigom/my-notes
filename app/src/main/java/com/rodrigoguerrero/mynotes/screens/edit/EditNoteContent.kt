@@ -41,9 +41,9 @@ fun EditNoteContent(
     var contentTextFieldValue by remember {
         mutableStateOf(
             TextFieldValue(
-                text = currentState.content,
-                selection = if (currentState.content.isNotEmpty()) {
-                    TextRange(currentState.content.length)
+                text = currentState.note.content.orEmpty(),
+                selection = if (currentState.note.content?.isNotEmpty() == true) {
+                    TextRange(currentState.note.content.length)
                 } else {
                     TextRange.Zero
                 }
@@ -61,7 +61,7 @@ fun EditNoteContent(
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = currentState.title,
+            value = currentState.note.title.orEmpty(),
             onValueChange = viewModel::updateTitle,
             textStyle = MyNotesTheme.typography.headlineSmall,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -78,7 +78,7 @@ fun EditNoteContent(
                 disabledBorderColor = Color.Transparent,
                 errorBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                backgroundColor = currentState.color ?: Color.Transparent,
+                backgroundColor = currentState.note.color ?: Color.Transparent,
                 textColor = MyNotesTheme.color.onSurface,
                 cursorColor = MyNotesTheme.color.onSurface
             )
@@ -105,7 +105,7 @@ fun EditNoteContent(
                 disabledBorderColor = Color.Transparent,
                 errorBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                backgroundColor = currentState.color ?: Color.Transparent,
+                backgroundColor = currentState.note.color ?: Color.Transparent,
                 textColor = MyNotesTheme.color.onSurface,
                 cursorColor = MyNotesTheme.color.onSurface
             )

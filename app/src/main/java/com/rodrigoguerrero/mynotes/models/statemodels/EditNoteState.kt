@@ -2,54 +2,25 @@ package com.rodrigoguerrero.mynotes.models.statemodels
 
 import androidx.compose.ui.graphics.Color
 import com.rodrigoguerrero.domain.models.NoteModel
+import com.rodrigoguerrero.mynotes.models.mappers.toUiModel
+import com.rodrigoguerrero.mynotes.models.uimodels.Note
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 sealed class EditNoteState {
-    data class ContentState(
-        val title: String,
-        val content: String,
-        val editedDate: String,
-        val createdDate: String,
-        val id: Int,
-        val color: Color?,
-        val isPinned: Boolean
-    ) : EditNoteState()
-
+    data class ContentState(val note: Note) : EditNoteState()
     object LoadingState : EditNoteState()
     object ErrorState : EditNoteState()
 }
 
-fun EditNoteState.ContentState.toDomainModel() = NoteModel(
-    id = id,
-    title = title,
-    content = content,
-    modified = editedDate,
-    created = createdDate,
-    color = color?.value,
-    isPinned = isPinned
-)
-
 fun MutableStateFlow<EditNoteState>.updateWithNote(note: NoteModel) {
-    update {
-        with(note) {
-            EditNoteState.ContentState(
-                title = title.orEmpty(),
-                content = content.orEmpty(),
-                editedDate = modified,
-                createdDate = created,
-                id = id,
-                color = color?.let { Color(it) },
-                isPinned = isPinned
-            )
-        }
-    }
+    update { EditNoteState.ContentState(note = note.toUiModel()) }
 }
 
 fun MutableStateFlow<EditNoteState>.updateTitle(title: String) {
     update {
         if (it is EditNoteState.ContentState) {
-            it.copy(title = title)
+            it.copy(note = it.note.copy(title = title))
         } else {
             it
         }
@@ -59,7 +30,7 @@ fun MutableStateFlow<EditNoteState>.updateTitle(title: String) {
 fun MutableStateFlow<EditNoteState>.updateContent(value: String) {
     update {
         if (it is EditNoteState.ContentState) {
-            it.copy(content = value)
+            it.copy(note = it.note.copy(content = value))
         } else {
             it
         }
@@ -69,7 +40,7 @@ fun MutableStateFlow<EditNoteState>.updateContent(value: String) {
 fun MutableStateFlow<EditNoteState>.updateNoteColor(value: Color?) {
     update {
         if (it is EditNoteState.ContentState) {
-            it.copy(color = value)
+            it.copy(note = it.note.copy(color = value))
         } else {
             it
         }
@@ -79,7 +50,7 @@ fun MutableStateFlow<EditNoteState>.updateNoteColor(value: Color?) {
 fun MutableStateFlow<EditNoteState>.toggleIsPinned() {
     update {
         if (it is EditNoteState.ContentState) {
-            it.copy(isPinned = !it.isPinned)
+            it.copy(note = it.note.copy(isPinned = !it.note.isPinned))
         } else {
             it
         }

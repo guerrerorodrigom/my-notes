@@ -70,7 +70,7 @@ fun EditNoteScreen(
 
     val currentState = state
     val backgroundColor = if (currentState is ContentState) {
-        currentState.color
+        currentState.note.color
     } else {
         null
     }
@@ -86,7 +86,7 @@ fun EditNoteScreen(
                     coroutineScope.launch { bottomSheetState.hide() }
                 },
                 selectedColor = if (currentState is ContentState) {
-                    currentState.color
+                    currentState.note.color
                 } else {
                     null
                 }
@@ -107,7 +107,7 @@ fun EditNoteScreen(
                     },
                     onArchive = onArchive,
                     backgroundColor = backgroundColor ?: Color.Transparent,
-                    isPinned = (state as? ContentState)?.isPinned ?: false
+                    isPinned = (state as? ContentState)?.note?.isPinned ?: false
                 )
             },
             bottomBar = {
@@ -125,7 +125,7 @@ fun EditNoteScreen(
                         showBottomSheet(coroutineScope, bottomSheetState, keyboardController)
                     },
                     time = if (currentState is ContentState) {
-                        formatDate(currentState.editedDate, LocalContext.current)
+                        formatDate(currentState.note.editedDate, LocalContext.current)
                     } else {
                         ""
                     },

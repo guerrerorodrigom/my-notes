@@ -9,9 +9,9 @@ import com.rodrigoguerrero.domain.usecases.CreateNewNoteUseCase
 import com.rodrigoguerrero.domain.usecases.DeleteNoteUseCase
 import com.rodrigoguerrero.domain.usecases.EditNoteUseCase
 import com.rodrigoguerrero.domain.usecases.RetrieveNoteUseCase
+import com.rodrigoguerrero.mynotes.models.mappers.toDomainModel
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState
 import com.rodrigoguerrero.mynotes.models.statemodels.EditNoteState.ContentState
-import com.rodrigoguerrero.mynotes.models.statemodels.toDomainModel
 import com.rodrigoguerrero.mynotes.models.statemodels.toggleIsPinned
 import com.rodrigoguerrero.mynotes.models.statemodels.updateContent
 import com.rodrigoguerrero.mynotes.models.statemodels.updateNoteColor
@@ -27,8 +27,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
@@ -56,7 +54,7 @@ class EditNoteViewModel @Inject constructor(
                 .collectLatest {
                     val currentState = _state.value
                     if (currentState is ContentState) {
-                        editNoteUseCase(currentState.toDomainModel()).also { result ->
+                        editNoteUseCase(currentState.note.toDomainModel()).also { result ->
                             if (result is EditNoteResult.Saved) {
                                 _state.updateWithNote(result.note)
                             }
@@ -100,7 +98,7 @@ class EditNoteViewModel @Inject constructor(
         val currentState = _state.value
         if (currentState is ContentState) {
             viewModelScope.launch {
-                val note = currentState.toDomainModel()
+                val note = currentState.note.toDomainModel()
                 if (note.isEmpty()) {
                     deleteNoteUseCase(note.id)
                 } else {

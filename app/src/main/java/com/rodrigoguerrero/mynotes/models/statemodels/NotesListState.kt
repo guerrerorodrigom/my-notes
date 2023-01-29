@@ -1,5 +1,6 @@
 package com.rodrigoguerrero.mynotes.models.statemodels
 
+import androidx.compose.ui.graphics.Color
 import com.rodrigoguerrero.domain.models.NoteModel
 import com.rodrigoguerrero.mynotes.models.uimodels.ListMode
 import com.rodrigoguerrero.mynotes.models.uimodels.Note
@@ -10,14 +11,23 @@ data class NotesListState(
     val notes: List<Note> = emptyList(),
     val isLoading: Boolean = true,
     val listMode: ListMode = ListMode.LIST,
-    val isMultipleSelectionEnabled: Boolean = false
+    val isMultipleSelectionEnabled: Boolean = false,
+    val isPinned: Boolean = false
 )
 
 fun MutableStateFlow<NotesListState>.updateWithNotes(notes: List<NoteModel>) {
     update { state ->
         state.copy(
-            notes = notes.map {
-                Note(it.id, it.title, it.content, it.color, it.isPinned)
+            notes = notes.map { model ->
+                Note(
+                    id = model.id,
+                    title = model.title,
+                    content = model.content,
+                    color = model.color?.let { color -> Color(color) },
+                    isPinned = model.isPinned,
+                    editedDate = model.modified,
+                    createdDate = model.created
+                )
             },
             isLoading = false
         )
@@ -43,6 +53,7 @@ fun MutableStateFlow<NotesListState>.updateSelectNote(id: Int) {
         state.copy(
             notes = updatedNotes,
             isMultipleSelectionEnabled = updatedNotes.any { it.isSelected },
+            isPinned = updatedNotes.filter { it.isSelected }.all { it.isPinned }
         )
     }
 }

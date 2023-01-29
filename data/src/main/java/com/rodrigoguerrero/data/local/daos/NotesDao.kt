@@ -1,7 +1,6 @@
 package com.rodrigoguerrero.data.local.daos
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 internal interface NotesDao {
 
     @Query("SELECT * FROM notes WHERE isPinned = 0 ORDER BY modified_date DESC")
-    fun getAllNotes(): Flow<List<NoteEntity>>
+    fun getUnpinnedNotes(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM notes WHERE isPinned = 1 ORDER BY modified_date DESC")
     fun getPinnedNotes(): Flow<List<NoteEntity>>
@@ -29,4 +28,7 @@ internal interface NotesDao {
 
     @Query("DELETE FROM notes WHERE id = :id")
     suspend fun delete(id: Int)
+
+    @Query("UPDATE notes SET isPinned = :isPinned, modified_date = :modifiedTime WHERE id IN (:ids)")
+    suspend fun update(isPinned: Boolean, ids: List<Int>, modifiedTime: String)
 }

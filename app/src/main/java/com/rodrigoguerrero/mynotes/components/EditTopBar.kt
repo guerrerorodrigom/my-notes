@@ -9,6 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.outlined.AddAlert
 import androidx.compose.material.icons.outlined.Label
 import androidx.compose.material.icons.outlined.MoreVert
@@ -28,7 +29,9 @@ import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 @Composable
 fun EditTopBar(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit
+    isPinned: Boolean,
+    onClose: () -> Unit,
+    updatePinnedNotes: () -> Unit
 ) {
     var isMenuExpanded by remember { mutableStateOf(false) }
     TopAppBar(
@@ -46,9 +49,13 @@ fun EditTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { }) {
+            IconButton(onClick = updatePinnedNotes) {
                 Icon(
-                    imageVector = Icons.Outlined.PushPin,
+                    imageVector = if (isPinned) {
+                        Icons.Filled.PushPin
+                    } else {
+                        Icons.Outlined.PushPin
+                    },
                     contentDescription = null
                 )
             }
@@ -92,6 +99,6 @@ fun EditTopBar(
 @Composable
 private fun PreviewEditTopBar() {
     MyNotesTheme {
-        EditTopBar(onClose = { })
+        EditTopBar(isPinned = true, onClose = { }, updatePinnedNotes = { })
     }
 }
