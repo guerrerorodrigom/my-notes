@@ -13,7 +13,8 @@ data class NotesListState(
     val listMode: ListMode = ListMode.LIST,
     val isMultipleSelectionEnabled: Boolean = false,
     val selectedNotesArePinned: Boolean = false,
-    val selectedNotesColor: Color? = null
+    val selectedNotesColor: Color? = null,
+    val totalSelectedNotes: Int = 0
 )
 
 fun MutableStateFlow<NotesListState>.updateWithNotes(notes: List<NoteModel>) {
@@ -60,7 +61,8 @@ fun MutableStateFlow<NotesListState>.updateSelectNote(id: Int) {
                 selectedNotes[0].color ?: Color.Transparent
             } else {
                 null
-            }
+            },
+            totalSelectedNotes = selectedNotes.size
         )
     }
 }

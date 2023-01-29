@@ -48,7 +48,8 @@ fun NotesListScreen(
                     updatePinnedNotes = viewModel::updatePinnedNotes,
                     isPinned = state.selectedNotesArePinned,
                     selectedColor = state.selectedNotesColor,
-                    onColorSelected = viewModel::updateColorInSelectedNotes
+                    onColorSelected = viewModel::updateColorInSelectedNotes,
+                    totalSelectedNotes = state.totalSelectedNotes
                 )
             } else {
                 systemUiController.setStatusBarColor(color = MyNotesTheme.color.surface)

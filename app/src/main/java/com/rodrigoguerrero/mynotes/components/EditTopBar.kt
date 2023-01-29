@@ -1,11 +1,14 @@
 package com.rodrigoguerrero.mynotes.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -20,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
@@ -32,6 +36,7 @@ fun EditTopBar(
     modifier: Modifier = Modifier,
     isPinned: Boolean,
     selectedColor: Color?,
+    totalSelectedNotes: Int,
     onClose: () -> Unit,
     updatePinnedNotes: () -> Unit,
     onColorSelected: (Color?) -> Unit
@@ -54,10 +59,20 @@ fun EditTopBar(
             .padding(bottom = MyNotesTheme.padding.m),
         elevation = dimensionResource(id = R.dimen.top_bar_elevation),
         navigationIcon = {
-            IconButton(onClick = onClose) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = null
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(MyNotesTheme.padding.s)
+            ) {
+                IconButton(onClick = onClose) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = null
+                    )
+                }
+                Text(
+                    text = totalSelectedNotes.toString(),
+                    style = MyNotesTheme.typography.titleLarge,
+                    modifier = Modifier.padding(bottom = MyNotesTheme.padding.xxs)
                 )
             }
         },
@@ -117,6 +132,7 @@ private fun PreviewEditTopBar() {
         EditTopBar(
             isPinned = true,
             selectedColor = Color.Blue,
+            totalSelectedNotes = 3,
             onClose = { },
             updatePinnedNotes = { },
             onColorSelected = { }
