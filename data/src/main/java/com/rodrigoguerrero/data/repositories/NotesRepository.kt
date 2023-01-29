@@ -17,4 +17,6 @@ interface NotesRepository {
     suspend fun deleteNote(id: Int)
 
     suspend fun updateNote(isPinned: Boolean, ids: List<Int>, modifiedTime: String)
+
+    suspend fun updateNote(color: Long?, ids: List<Int>, modifiedTime: String)
 }

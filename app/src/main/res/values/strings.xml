@@ -45,4 +45,6 @@
     <string name="selected_note_menu_delete">Delete</string>
     <string name="selected_note_menu_copy">Make a copy</string>
     <string name="selected_note_menu_send">Send</string>
+
+    <string name="note_color_dialog_title">Note color</string>
 </resources>

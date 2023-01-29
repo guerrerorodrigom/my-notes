@@ -88,50 +88,6 @@ private fun ColorSelectorRow(
     }
 }
 
-@Composable
-private fun ColorSelector(
-    color: Color,
-    isSelected: Boolean,
-    isEmpty: Boolean,
-    onColorClicked: (Color) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .wrapContentSize(Alignment.Center)
-            .padding(MyNotesTheme.padding.s)
-    ) {
-        var modifier = Modifier
-            .size(dimensionResource(id = R.dimen.color_selector_size))
-            .clip(CircleShape)
-            .background(color)
-
-        if (isSelected) {
-            modifier = modifier
-                .border(
-                    border = BorderStroke(
-                        width = dimensionResource(id = R.dimen.color_selector_border_width),
-                        color = MyNotesTheme.color.primary
-                    ),
-                    shape = CircleShape
-                )
-        }
-
-        IconButton(
-            modifier = modifier,
-            onClick = { onColorClicked(color) }
-        ) {
-            val icon = when {
-                isEmpty -> Icons.Outlined.FormatColorReset
-                isSelected -> Icons.Filled.Check
-                else -> null
-            }
-            icon?.let {
-                Icon(imageVector = it, contentDescription = null, tint = MyNotesTheme.color.primary)
-            }
-        }
-    }
-}
-
 @Preview(name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(showBackground = true)
 @Composable

@@ -5,35 +5,18 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.AddAlert
-import androidx.compose.material.icons.outlined.Label
-import androidx.compose.material.icons.outlined.MoreVert
-import androidx.compose.material.icons.outlined.Palette
-import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.rodrigoguerrero.mynotes.R
 import com.rodrigoguerrero.mynotes.components.EditTopBar
 import com.rodrigoguerrero.mynotes.components.MainBottomBar
 import com.rodrigoguerrero.mynotes.components.NoteCard
@@ -63,7 +46,9 @@ fun NotesListScreen(
                 EditTopBar(
                     onClose = viewModel::closeEditBar,
                     updatePinnedNotes = viewModel::updatePinnedNotes,
-                    isPinned = state.isPinned
+                    isPinned = state.selectedNotesArePinned,
+                    selectedColor = state.selectedNotesColor,
+                    onColorSelected = viewModel::updateColorInSelectedNotes
                 )
             } else {
                 systemUiController.setStatusBarColor(color = MyNotesTheme.color.surface)

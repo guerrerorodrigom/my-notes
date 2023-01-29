@@ -12,7 +12,8 @@ data class NotesListState(
     val isLoading: Boolean = true,
     val listMode: ListMode = ListMode.LIST,
     val isMultipleSelectionEnabled: Boolean = false,
-    val isPinned: Boolean = false
+    val selectedNotesArePinned: Boolean = false,
+    val selectedNotesColor: Color? = null
 )
 
 fun MutableStateFlow<NotesListState>.updateWithNotes(notes: List<NoteModel>) {
@@ -50,10 +51,16 @@ fun MutableStateFlow<NotesListState>.updateSelectNote(id: Int) {
                 it
             }
         }
+        val selectedNotes = updatedNotes.filter { it.isSelected }
         state.copy(
             notes = updatedNotes,
-            isMultipleSelectionEnabled = updatedNotes.any { it.isSelected },
-            isPinned = updatedNotes.filter { it.isSelected }.all { it.isPinned }
+            isMultipleSelectionEnabled = selectedNotes.isNotEmpty(),
+            selectedNotesArePinned = selectedNotes.all { it.isPinned },
+            selectedNotesColor = if (selectedNotes.distinctBy { it.color }.size == 1) {
+                selectedNotes[0].color ?: Color.Transparent
+            } else {
+                null
+            }
         )
     }
 }

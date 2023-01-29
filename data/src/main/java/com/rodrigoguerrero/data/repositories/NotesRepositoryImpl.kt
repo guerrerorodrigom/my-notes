@@ -45,4 +45,8 @@ internal class NotesRepositoryImpl @Inject constructor(
     override suspend fun updateNote(isPinned: Boolean, ids: List<Int>, modifiedTime: String) {
         notesDataSource.update(isPinned, ids, modifiedTime)
     }
+
+    override suspend fun updateNote(color: Long?, ids: List<Int>, modifiedTime: String) {
+        notesDataSource.update(color, ids, modifiedTime)
+    }
 }

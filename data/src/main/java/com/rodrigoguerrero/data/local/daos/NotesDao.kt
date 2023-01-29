@@ -31,4 +31,7 @@ internal interface NotesDao {
 
     @Query("UPDATE notes SET isPinned = :isPinned, modified_date = :modifiedTime WHERE id IN (:ids)")
     suspend fun update(isPinned: Boolean, ids: List<Int>, modifiedTime: String)
+
+    @Query("UPDATE notes SET color = :color, modified_date = :modifiedTime WHERE id IN (:ids)")
+    suspend fun update(color: Long?, ids: List<Int>, modifiedTime: String)
 }

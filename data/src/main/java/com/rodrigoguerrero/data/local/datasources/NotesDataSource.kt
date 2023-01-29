@@ -16,4 +16,6 @@ internal interface NotesDataSource {
     suspend fun delete(id: Int)
 
     suspend fun update(isPinned: Boolean, ids: List<Int>, modifiedTime: String)
+
+    suspend fun update(color: Long?, ids: List<Int>, modifiedTime: String)
 }

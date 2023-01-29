@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.rodrigoguerrero.mynotes.R
@@ -30,10 +31,22 @@ import com.rodrigoguerrero.mynotes.theme.MyNotesTheme
 fun EditTopBar(
     modifier: Modifier = Modifier,
     isPinned: Boolean,
+    selectedColor: Color?,
     onClose: () -> Unit,
-    updatePinnedNotes: () -> Unit
+    updatePinnedNotes: () -> Unit,
+    onColorSelected: (Color?) -> Unit
 ) {
     var isMenuExpanded by remember { mutableStateOf(false) }
+    var showColorSelectionDialog by remember { mutableStateOf(false) }
+
+    if (showColorSelectionDialog) {
+        ColorSelectionDialog(
+            selectedColor = selectedColor,
+            onColorSelected = onColorSelected,
+            onDismissRequest = { showColorSelectionDialog = false }
+        )
+    }
+
     TopAppBar(
         backgroundColor = MyNotesTheme.color.surfaceVariant,
         modifier = modifier
@@ -65,7 +78,9 @@ fun EditTopBar(
                     contentDescription = null
                 )
             }
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                showColorSelectionDialog = true
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.Palette,
                     contentDescription = null
@@ -99,6 +114,12 @@ fun EditTopBar(
 @Composable
 private fun PreviewEditTopBar() {
     MyNotesTheme {
-        EditTopBar(isPinned = true, onClose = { }, updatePinnedNotes = { })
+        EditTopBar(
+            isPinned = true,
+            selectedColor = Color.Blue,
+            onClose = { },
+            updatePinnedNotes = { },
+            onColorSelected = { }
+        )
     }
 }

@@ -5,16 +5,15 @@ import com.rodrigoguerrero.domain.models.NoteModel
 import javax.inject.Inject
 import kotlinx.datetime.Clock
 
-class UpdatePinnedUseCase @Inject constructor(
+class UpdateColorUseCase @Inject constructor(
     private val repository: NotesRepository
 ) {
 
-    suspend operator fun invoke(notes: List<NoteModel>) {
+    suspend operator fun invoke(notes: List<NoteModel>, color: Long?) {
         val currentTime = Clock.System.now()
-        val isPinned = !notes.all { it.isPinned }
 
         repository.updateNote(
-            isPinned = isPinned,
+            color = color,
             ids = notes.map { it.id },
             modifiedTime = currentTime.toString()
         )

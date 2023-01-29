@@ -1,8 +1,10 @@
 package com.rodrigoguerrero.mynotes.viewmodels
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rodrigoguerrero.domain.usecases.RetrieveAllNotesUseCase
+import com.rodrigoguerrero.domain.usecases.UpdateColorUseCase
 import com.rodrigoguerrero.domain.usecases.UpdatePinnedUseCase
 import com.rodrigoguerrero.mynotes.models.mappers.toDomainModel
 import com.rodrigoguerrero.mynotes.models.statemodels.NotesListState
@@ -23,6 +25,7 @@ import kotlinx.coroutines.launch
 class NotesListViewModel @Inject constructor(
     private val retrieveAllNotesUseCase: RetrieveAllNotesUseCase,
     private val updatePinnedUseCase: UpdatePinnedUseCase,
+    private val updateColorUseCase: UpdateColorUseCase,
     private val appSettings: AppSettings
 ) : ViewModel() {
 
@@ -54,6 +57,20 @@ class NotesListViewModel @Inject constructor(
                 .filter { it.isSelected }
                 .map { it.toDomainModel() }
             updatePinnedUseCase(selectedNotes)
+            _state.updateUnselectAll()
+        }
+    }
+
+    fun updateColorInSelectedNotes(color: Color?) {
+        viewModelScope.launch {
+            val selectedNotes = _state.value.notes
+                .filter { it.isSelected }
+                .map { it.toDomainModel() }
+
+            updateColorUseCase(
+                color = if (color == Color.Transparent) null else color?.value?.toLong(),
+                notes = selectedNotes
+            )
             _state.updateUnselectAll()
         }
     }

@@ -31,4 +31,8 @@ internal class NotesDataSourceImpl @Inject constructor(
     override suspend fun update(isPinned: Boolean, ids: List<Int>, modifiedTime: String) {
         database.notesDao().update(isPinned, ids, modifiedTime)
     }
+
+    override suspend fun update(color: Long?, ids: List<Int>, modifiedTime: String) {
+        database.notesDao().update(color, ids, modifiedTime)
+    }
 }
